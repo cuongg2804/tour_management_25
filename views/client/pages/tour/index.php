@@ -24,7 +24,7 @@
                 <?= number_format($item['price'], 0, ',', '.') ?>đ
               </del>
               <p class="font-weight-bold">Giảm <?= intval($item['discount']) ?>%</p>
-              <a href="/tours/detail/<?= htmlspecialchars($item['slug']) ?>" class="btn btn-primary">Xem chi tiết</a>
+              <a href="tour/detail/<?= htmlspecialchars($item['slug']) ?>" class="btn btn-primary">Xem chi tiết</a>
             </div>
           </div>
         </div>
