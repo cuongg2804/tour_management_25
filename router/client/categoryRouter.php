@@ -3,7 +3,7 @@
     class categoryRouter extends index{
         public function index ($url)
         {
-            $nameController = $url[1];
+            $nameController = (isset($url[1])?$url[1] : "index");
             (new categoryController())->$nameController();
         }
     }

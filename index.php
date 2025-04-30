@@ -12,8 +12,9 @@
     <?php 
         include "router/client/index.php";
 
-        $url = (($_GET['url']) ? $_GET['url'] : NULL);
-        if($url != NULL) {
+        
+        if(isset($_GET['url'])) {
+            $url = ($_GET['url']);
             $url  = explode("/",rtrim($url,'/'));
             if (!str_contains($url[0], "admin")) {
                 (new index())->routerClient($url);

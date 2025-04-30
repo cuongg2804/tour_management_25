@@ -1,30 +1,26 @@
 <div class="container my-3">
   <div class="row">
     <div class="col-12">
-      <!-- Giả sử bạn có hàm để hiển thị tiêu đề trang -->
       <h1>Trang danh mục tour</h1>
     </div>
   </div>
 
   <div class="row">
-    <div class="col-6 mb-3">
-      <div class="card">
-        <img src="/images/tour1.jpg" alt="Tour 1">
-        <div class="card-body">
-          <h5 class="card-title">Tour Phú Quốc</h5>
-          <a href="/tours/phu-quoc" class="btn btn-primary">Xem chi tiết</a>
+    <?php if (!empty($query)): ?>
+      <?php foreach ($query as $item): ?>
+        <div class="col-6 mb-3">
+          <div class="card">
+            <img src="<?= htmlspecialchars($item['image']); ?>" alt="<?= htmlspecialchars($item['title']); ?>">
+            <div class="card-body">
+              <h5 class="card-title"><?= htmlspecialchars($item['title']); ?></h5>
+              <p class="card-text"><?= htmlspecialchars($item['description']); ?></p>
+              <a href="tour/index/<?= htmlspecialchars($item['slug']);?>" class="btn btn-primary">Xem chi tiết</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="col-6 mb-3">
-      <div class="card">
-        <img src="/images/tour2.jpg" alt="Tour 2">
-        <div class="card-body">
-          <h5 class="card-title">Tour Đà Nẵng</h5>
-          <a href="/tours/da-nang" class="btn btn-primary">Xem chi tiết</a>
-        </div>
-      </div>
-    </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <p>Không có danh mục nào.</p>
+    <?php endif; ?>
   </div>
 </div>

@@ -1,0 +1,10 @@
+RewriteEngine On
+
+# Bỏ qua các file tĩnh
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule \.(css|js|png|jpg|jpeg|gif|ico)$ - [L]
+
+# Còn lại thì rewrite
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
