@@ -45,7 +45,8 @@
 
         
         public function detail($url) {
-            $slug = $url[2];  // Giả sử $url[2] là slug của category
+            if($url[2]){
+                $slug = $url[2];  // Giả sử $url[2] là slug của category
         
             $sql = "SELECT tours.*, 
                            ROUND(price * (1 - discount / 100), 0) AS price_special
@@ -58,6 +59,7 @@
             $tourDetail['images'] = json_decode($tourDetail['images'], true);
         
             include "views/client/pages/tour/detail.php";
+            }
         }
     }
 ?>
