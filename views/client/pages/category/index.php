@@ -1,3 +1,8 @@
+<?php 
+    include "./views/client/partials/header.php";
+?>
+
+
 <div class="container my-3">
   <div class="row">
     <div class="col-12">
@@ -24,3 +29,7 @@
     <?php endif; ?>
   </div>
 </div>
+
+<?php 
+    include "./views/client/partials/footer.php";
+?>

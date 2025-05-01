@@ -1,6 +1,12 @@
-<!-- <div class="alert alert-success alert-hidden" id="alert-add-cart-success">
+<?php 
+    include "./views/client/partials/header.php";
+?>
+
+
+
+<div class="alert alert-success alert-hidden" alert-add-cart-success>
   Đã thêm tour vào giỏ hàng! <span>x</span>
-</div> -->
+</div>
 
 <div class="tour-detail">
   <div class="container my-3">
@@ -51,7 +57,7 @@
           Giảm tới <?= intval($tourDetail['discount']) ?>%
         </div>
 
-        <form action="/cart/add.php" method="POST">
+        <form action="" form-add-to-cart>
           <input type="hidden" name="tour_id" value="<?= $tourDetail['id'] ?>">
           <input
             class="form-control mb-2"
@@ -83,3 +89,6 @@
     </div>
   </div>
 </div>
+
+
+<?php  include "views/client/partials/footer.php"; ?>

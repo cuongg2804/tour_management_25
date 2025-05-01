@@ -131,7 +131,9 @@
   right: 15px;
   z-index: 9999;
 }
-
+.alert-hidden {
+  display: none;
+}
 [alert-add-cart-susscess].alert-hidden {
   animation-name: alert-hidden;
   animation-fill-mode: both;

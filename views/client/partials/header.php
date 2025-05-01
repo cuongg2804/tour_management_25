@@ -35,7 +35,7 @@
                 <a href="category">Danh mục</a>
               </li>
               <li>
-                <a href="/cart">Giỏ hàng (<span mini-cart>0</span>)</a>
+                <a href="cart">Giỏ hàng (<span mini-cart>0</span>)</a>
               </li>
             </ul>
           </div>
