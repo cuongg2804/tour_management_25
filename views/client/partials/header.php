@@ -20,7 +20,7 @@
       <div class="row align-items-center">
         <div class="col-3">
           <div class="inner-logo">
-            <a href="/">
+            <a href="main">
               <img src="public/client/image/OIP.jpg" alt="Logo">
             </a>
           </div>
@@ -29,7 +29,7 @@
           <div class="inner-menu">
             <ul>
               <li>
-                <a href="/">Trang chủ</a>
+                <a href="main">Trang chủ</a>
               </li>
               <li>
                 <a href="category">Danh mục</a>
