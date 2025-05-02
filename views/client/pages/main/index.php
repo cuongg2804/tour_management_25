@@ -20,100 +20,41 @@
         <div class="box-head">
           <div class="box-head__left">
             <div class="box-head__sub-title">Có gì mới?</div>
-            <div class="box-head__title">một số vật nuôi của chúng tôi</div>
+            <div class="box-head__title">Các tour nổi bật</div>
           </div>
           <div class="box-head__right"><a class="button" href="#">Xem thêm <i class="fa-solid fa-angle-right"></i></a></div>
         </div>
         <div class="section-2__wrap">
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-1.jpg" alt="MO231 - Pomeranian Trắng"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO231 - Pomeranian Trắng</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Đực</span></div>
-                <div class="section-2__info-item">Tuổi: <span>02 tháng</span></div>
-              </div>
-              <div class="section-2__price">6.900.000 VND</div>
-            </div>
+    <?php foreach ($result as $tour): ?>
+      <?php
+        $images = json_decode($tour['images']);
+        $imageUrl = $images[0] ;
+        $title = $tour['title'];
+        $code = $tour['code'];
+        $price = $tour['price'];
+        $discount = $tour['discount'];
+        $finalPrice = $price * (1 - $discount / 100);
+      ?>
+      <div class="section-2__item">
+        <div class="section-2__image">
+          <a href="tour/detail/<?= htmlspecialchars($tour['slug'])?>">
+            <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($code . ' - ' . $title) ?>">
+          </a>
+        </div>
+        <div class="section-2__content">
+          <h3 class="section-2__title">
+            <a href="tour/detail/<?= htmlspecialchars($tour['slug'])?>"><?= htmlspecialchars($code . ' - ' . $title) ?></a>
+          </h3>
+          <div class="section-2__info">
+            <!-- Các trường thông tin khác nếu có -->
           </div>
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-2.jpg" alt="MO502 - Poodle Tiny Vàng"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO502 - Poodle Tiny Vàng</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Cái</span></div>
-                <div class="section-2__info-item">Tuổi: <span>02 tháng</span></div>
-              </div>
-              <div class="section-2__price">3.900.000 VND</div>
-            </div>
-          </div>
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-3.jpg" alt="MO102 - Poodle Tiny Sepia"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO102 - Poodle Tiny Sepia</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Đực</span></div>
-                <div class="section-2__info-item">Tuổi: <span>02 tháng</span></div>
-              </div>
-              <div class="section-2__price">4.000.000 VND</div>
-            </div>
-          </div>
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-4.jpg" alt="MO512 - Alaskan Malamute"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO512 - Alaskan Malamute</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Đực</span></div>
-                <div class="section-2__info-item">Tuổi: <span>03 tháng</span></div>
-              </div>
-              <div class="section-2__price">8.900.000 VND</div>
-            </div>
-          </div>
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-5.jpg" alt="MO231 - Pembroke Corgi"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO231 - Pembroke Corgi</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Đực</span></div>
-                <div class="section-2__info-item">Tuổi: <span>02 tháng</span></div>
-              </div>
-              <div class="section-2__price">7.900.000 VND</div>
-            </div>
-          </div>
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-6.jpg" alt="MO502 - Pembroke Corgi"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO502 - Pembroke Corgi</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Cái</span></div>
-                <div class="section-2__info-item">Tuổi: <span>02 tháng</span></div>
-              </div>
-              <div class="section-2__price">9.000.000 VND</div>
-            </div>
-          </div>
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-7.jpg" alt="MO231 - Pomeranian Trắng"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO231 - Pomeranian Trắng</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Cái</span></div>
-                <div class="section-2__info-item">Tuổi: <span>02 tháng</span></div>
-              </div>
-              <div class="section-2__price">6.500.000 VND</div>
-            </div>
-          </div>
-          <div class="section-2__item">
-            <div class="section-2__image"><a href="#"><img src="assets/images/pet-8.jpg" alt="MO512 - Poodle Tiny"></a></div>
-            <div class="section-2__content">
-              <h3 class="section-2__title"><a href="#">MO512 - Poodle Tiny</a></h3>
-              <div class="section-2__info">
-                <div class="section-2__info-item">Giống: <span>Đực</span></div>
-                <div class="section-2__info-item">Tuổi: <span>02 tháng</span></div>
-              </div>
-              <div class="section-2__price">5.000.000 VND</div>
-            </div>
+          <div class="section-2__price">
+            <?= number_format($finalPrice, 0, ',', '.') ?> VND
           </div>
         </div>
+      </div>
+    <?php endforeach; ?>
+</div>
         <div class="section-2__button-bottom"><a class="button" href="#">Xem thêm <i class="fa-solid fa-angle-right"></i></a></div>
       </div>
     </div>
