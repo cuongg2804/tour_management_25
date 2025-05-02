@@ -55,7 +55,7 @@
                 <?php endif; ?>
               </td>
               <td>
-                <a href="/<?= $prefixAdmin ?>/categories/detail/<?= $item['id'] ?>"
+                <a href="admin/category/detail/<?= $item['id'] ?>"
                    class="btn btn-secondary btn-sm">Chi tiết</a>
 
                 <a href="/<?= $prefixAdmin ?>/categories/edit/<?= $item['id'] ?>"
@@ -74,12 +74,12 @@
       </table>
 
       <!-- Pagination -->
-      <?php if (!empty($objectPagination)): ?>
+      <?php if (!empty($objPagination)): ?>
         <nav>
           <ul class="pagination">
             <!-- Ví dụ đơn giản -->
-            <?php for ($i = 1; $i <= $objectPagination['totalPage']; $i++): ?>
-              <li class="page-item <?= $i == $objectPagination['currentPage'] ? 'active' : '' ?>">
+            <?php for ($i = 1; $i <= $objPagination['totalPage']; $i++): ?>
+              <li class="page-item <?= $i == $objPagination['currentPage'] ? 'active' : '' ?>">
                 <a class="page-link" href="admin/category?page=<?= $i ?>">
                   <?= $i ?>
                 </a>
