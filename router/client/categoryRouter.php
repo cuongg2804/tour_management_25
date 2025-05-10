@@ -1,5 +1,5 @@
 <?php 
-    include __DIR__ . "./../../controller/client/category/categoryController.php";
+    include __DIR__ . "/../../controller/client/category/categoryController.php";
     class categoryRouter extends index{
         public function index ($url)
         {
