@@ -8,10 +8,16 @@
     <base href="/tour_management/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/file-upload-with-preview/dist/style.css">
+    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css">
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <script src="https://cdn.tiny.cloud/1/tpg1m4pg1gudc3y6l4ezlwzhfr97mbmkf3dhb300sfthxdoj/tinymce/5/tinymce.min.js"></script>
+    
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/file-upload-with-preview@6.1.2/dist/style.css"
+    >
     <link rel="stylesheet" href="public/admin/css/style.css">
   </head>
 <body>

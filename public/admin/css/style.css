@@ -98,4 +98,163 @@
 .image-preview[src=""] {
   display: none;
 }
+
+/* Biến màu để dễ dàng tùy chỉnh */
+:root {
+  --primary-color: #007bff; /* Màu xanh dương làm điểm nhấn */
+  --primary-hover-color: #0056b3;
+  --light-gray-color: #f0f0f0;
+  --gray-color: #ccc;
+  --dark-gray-color: #666;
+  --text-color: #333;
+  --danger-color: #dc3545;
+  --danger-hover-color: #c82333;
+  --preview-size: 120px; /* Kích thước cho mỗi ảnh preview */
+}
+
+/* --- Kiểu dáng cho toàn bộ container --- */
+.custom-file-container {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  position: relative; /* Để định vị nút clear */
+  margin-bottom: 20px;
+}
+
+/* --- Kiểu dáng cho nút "Xóa tất cả" (nếu đây là chức năng của nó) --- */
+.custom-file-container__image-clear {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background-color: var(--light-gray-color);
+  color: var(--dark-gray-color);
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.custom-file-container__image-clear:hover {
+  background-color: var(--danger-color);
+  color: white;
+}
+
+/* --- Ẩn input file gốc (thư viện thường làm điều này) --- */
+.custom-file-container__custom-file__custom-file-input {
+  /* Thư viện có thể đã có kiểu để ẩn nó, ví dụ: */
+  opacity: 0;
+  position: absolute;
+  width: 0.1px;
+  height: 0.1px;
+  overflow: hidden;
+  z-index: -1;
+}
+
+/* --- Kiểu dáng cho phần tử đóng vai trò nút "Chọn tệp" --- */
+/* Nếu thư viện không dùng label, bạn có thể cần click vào đây để trigger input */
+.custom-file-container__custom-file__custom-file-control {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  transition: background-color 0.2s ease;
+  margin-bottom: 15px; /* Khoảng cách với vùng preview */
+}
+
+.custom-file-container__custom-file__custom-file-control:hover {
+  background-color: var(--primary-hover-color);
+}
+
+/* Giả sử bạn có một label liên kết với input (cách làm phổ biến) */
+/* Nếu không, bạn có thể cần JavaScript để khi click vào custom-file-control thì trigger input */
+/* Ví dụ, nếu có label: */
+/*
+label.custom-file-container__custom-file {
+  display: inline-block;
+  cursor: pointer;
+}
+label.custom-file-container__custom-file .custom-file-container__custom-file__custom-file-control {
+  pointer-events: none; /* Để click xuyên qua label tới input
+}
+*/
+
+/* --- Kiểu dáng cho khu vực xem trước ảnh --- */
+.custom-file-container__image-preview {
+  display: flex; /* Sắp xếp các ảnh preview theo hàng ngang */
+  flex-wrap: wrap; /* Cho phép xuống dòng nếu nhiều ảnh */
+  gap: 15px; /* Khoảng cách giữa các ảnh preview */
+  margin-top: 15px;
+  border-top: 1px solid var(--light-gray-color);
+  padding-top: 15px;
+}
+
+/* --- Kiểu dáng cho từng ảnh preview bên trong --- */
+/* Thư viện có thể tạo ra các div hoặc img. Dưới đây là ví dụ cho img trực tiếp
+ hoặc một div bao quanh img có class .preview-item (bạn cần kiểm tra class thực tế) */
+
+.custom-file-container__image-preview img,
+.custom-file-container__image-preview .preview-item img { /* Phổ biến */
+  width: var(--preview-size);
+  height: var(--preview-size);
+  object-fit: cover; /* QUAN TRỌNG: Giữ tỷ lệ và lấp đầy, cắt phần thừa */
+  border-radius: 5px;
+  border: 1px solid var(--gray-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Nếu thư viện tạo ra một div cho mỗi ảnh preview (thường có class riêng) */
+/* ví dụ: .custom-file-container__image-preview__image (tên class này có thể khác) */
+.custom-file-container__image-preview > div { /* Áp dụng cho các div con trực tiếp */
+  width: var(--preview-size);
+  height: var(--preview-size);
+  overflow: hidden; /* Để object-fit hoạt động đúng nếu ảnh là con */
+  border-radius: 5px;
+  border: 1px solid var(--gray-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative; /* Cho nút xóa riêng của từng ảnh nếu có */
+}
+
+.custom-file-container__image-preview > div img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Nếu có nút xóa cho từng ảnh preview (thường được thêm bởi thư viện) */
+/* Ví dụ: .custom-file-container__image-preview__item__delete-button */
+.custom-file-container__image-preview .preview-item-delete-button { /* Thay .preview-item-delete-button bằng class thực tế */
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.custom-file-container__image-preview .preview-item-delete-button:hover {
+  background-color: rgba(220, 53, 69, 0.8); /* Màu đỏ khi hover */
+}
 /* End Image Preview */

@@ -12,12 +12,7 @@
             $stmt= $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            $sql2 ='SELECT * FROM categories';
-            $stmt2 = $this->conn->prepare($sql2);
-            $stmt2->execute();
-            $result2= $stmt2->fetchAll(PDO::FETCH_ASSOC);
-            //print_r($result2[1]);
+            print_r($result[0]);
             include "views/client/pages/main/index.php";
         }
     }

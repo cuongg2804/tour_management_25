@@ -3,8 +3,9 @@
   <div class="inner-menu">
     <ul>
       <li><a href="admin/dashboard">Tổng quan</a></li>
+      <li><a href="admin/order">Quản lý đơn hàng</a></li>
       <li><a href="admin/category">Quản lý danh mục</a></li>
-      <li><a href="admin/tours">Quản lý tour</a></li>
+      <li><a href="admin/tour">Quản lý tour</a></li>
       <li><a href="admin/roles/permissions">Phân quyền</a></li>
       <li><a href="admin/accounts">Tài khoản admin</a></li>
       <li><a href="admin/users">Tài khoản user</a></li>

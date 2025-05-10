@@ -42,9 +42,11 @@
             <tr>
               <td><?= $index + 1 ?></td>
               <td>
-                <img src="<?= htmlspecialchars($item['image']) ?>"
-                     alt="<?= htmlspecialchars($item['title']) ?>"
-                     width="100px" height="auto">
+              <!-- <img src="public/client/upload/<?=htmlspecialchars($item['image']);?>" alt="<?= htmlspecialchars($item['title']); ?>"
+                     width="100px" height="auto"> -->
+
+              <img src="<?=htmlspecialchars($item['image']);?>" alt="<?= htmlspecialchars($item['title']); ?>"
+                width="100px" height="auto">
               </td>
               <td><?= htmlspecialchars($item['title']) ?></td>
               <td>
@@ -58,7 +60,7 @@
                 <a href="admin/category/detail/<?= $item['id'] ?>"
                    class="btn btn-secondary btn-sm">Chi tiết</a>
 
-                <a href="/<?= $prefixAdmin ?>/categories/edit/<?= $item['id'] ?>"
+                <a href="admin/category/edit/<?= $item['id'] ?>"
                    class="btn btn-warning btn-sm ml-1">Sửa</a>
 
                 <button class="btn btn-danger btn-sm ml-1"
@@ -75,7 +77,7 @@
 
       <!-- Pagination -->
       <?php if (!empty($objPagination)): ?>
-        <nav>
+        <nav class="d-flex justify-content-center mt-4">
           <ul class="pagination">
             <!-- Ví dụ đơn giản -->
             <?php for ($i = 1; $i <= $objPagination['totalPage']; $i++): ?>

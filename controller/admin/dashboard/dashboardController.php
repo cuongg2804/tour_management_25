@@ -4,5 +4,7 @@
             $pageTitle = "Danh mục";
             include "views/admin/pages/dashboard/index.php";
         }
+
+
     }
 ?>

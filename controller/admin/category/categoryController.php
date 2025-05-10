@@ -61,7 +61,7 @@ class categoryController {
         $stmt->bindValue(":offset",$objPagination["skip"],PDO::PARAM_INT);
         $stmt->execute();
         $listCategory = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        
         $pageTitle="Danh mục";
         // Gọi view hiển thị
         include 'views/admin/pages/category/index.php';
@@ -112,7 +112,7 @@ class categoryController {
                 $anh = null;
                 if (isset($_FILES["images"]) && $_FILES["images"]["error"] == 0) {
                     $anh = basename($_FILES["images"]["name"]);
-                    $uploadDir =  __DIR__ . "/../../../public/client/upload/";
+                    $uploadDir =  __DIR__ . "/../../../public/client/upload/category/";
               
                     $uploadPath = $uploadDir . $anh;
                     //echo $uploadPath;
@@ -147,6 +147,85 @@ class categoryController {
 
             }
         
+    }
+
+    public function detail($url) {
+        $id = $url[3];
+        
+        
+        $sql = "select * from categories where id = $id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        $detailCategory = $stmt->fetch();
+
+        print_r($detailCategory);
+    }
+
+    public function edit($url) {
+        $id = $url[3];
+        
+        
+        $sql = "select * from categories where id = $id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+
+        $detailCategory = $stmt->fetch();
+
+      
+        include "views/admin/pages/category/edit.php";
+
+    }
+
+    public function editPost($url) {
+        ob_start();
+        if (isset($_POST["title"]) && isset($_POST["description"]) &&isset($_POST["status"]) ){
+            $title = $_POST["title"];
+            $des = $_POST["description"];
+            $status = $_POST["status"];
+
+            $anh = null;
+            if (isset($_FILES["images"]) && $_FILES["images"]["error"] == 0) {
+                $anh = basename($_FILES["images"]["name"]);
+                $uploadDir =  __DIR__ . "/../../../public/client/upload/";
+          
+                $uploadPath = $uploadDir.$anh;
+                
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0755, true);
+                }
+                move_uploaded_file($_FILES["images"]["tmp_name"], $uploadPath);
+                
+
+            }
+            $slug = $this->create_slug($title);
+            $sql = "UPDATE categories 
+                    SET title = :title, 
+                        description = :des, 
+                        status = :status, 
+                        image = :image, 
+                        slug = :slug, 
+                        updatedAt = NOW() 
+                    WHERE id = :id";
+
+            $stmt = $this->conn->prepare($sql);
+            $query = $stmt->execute([
+                ':title' => $title,
+                ':des' => $des,
+                ':status' => $status,
+                ':image' => $anh,
+                ':slug' => $slug,
+                ':id' => $url[3]  // đảm bảo $url[3] là số nguyên hợp lệ
+            ]);
+
+
+        }
+        if ($query) {
+            header("Location: /tour_management/admin/category");  // Chuyển hướng sau khi thành công
+        } else {
+            echo "THÊM THẤT BẠI, VUI LÒNG THỬ LẠI!!";  // Thông báo nếu không thành công
+        }
+
     }
 }
 ?>

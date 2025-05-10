@@ -19,7 +19,7 @@
                 <?php foreach ($tourDetail['images'] as $image): ?>
                   <div class="swiper-slide">
                     <div class="inner-image">
-                      <img src="<?= htmlspecialchars($image) ?>" alt="Ảnh tour">
+                      <img src="public/client/upload/tour/<?=htmlspecialchars($image); ?>" alt="<?= htmlspecialchars($tourDetail['title']); ?>">
                     </div>
                   </div>
                 <?php endforeach; ?>

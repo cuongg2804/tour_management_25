@@ -24,7 +24,7 @@
             <div class="box-head__sub-title">Có gì mới?</div>
             <div class="box-head__title">Các tour nổi bật</div>
           </div>
-          <div class="box-head__right"><a class="button" href="#">Xem thêm <i class="fa-solid fa-angle-right"></i></a></div>
+          <div class="box-head__right"><a class="button" href="category">Xem thêm <i class="fa-solid fa-angle-right"></i></a></div>
         </div>
         <div class="section-2__wrap">
     <?php foreach ($result as $tour): ?>
@@ -51,7 +51,7 @@
             <!-- Các trường thông tin khác nếu có -->
           </div>
           <div class="section-2__price">
-            <?= number_format($finalPrice, 0, ',', '.') ?> VND
+            <?= number_format($finalPrice, 0, ',', '.') ?> VNDD
           </div>
         </div>
       </div>
