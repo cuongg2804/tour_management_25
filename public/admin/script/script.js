@@ -7,3 +7,17 @@ if(uploadImage){
         imgPre.src = URL.createObjectURL(uploadImg_Input.files[0]);
     })
 }
+
+
+
+// document.addEventListener('DOMContentLoaded', function () {
+    
+// });
+
+const upload = new FileUploadWithPreview("upload-images", {
+    multiple: true,
+    maxFileCount: 6
+});
+
+
+

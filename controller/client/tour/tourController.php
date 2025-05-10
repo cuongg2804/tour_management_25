@@ -27,9 +27,9 @@
             $stmt->execute(['slug' => $url[2]]);  // an toàn hơn
             $toursList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            foreach ($toursList as &$tour) {
-                $tour['price_special'] = $tour['price'] * (1 - $tour['discount'] / 100);
-                $tour["image"]= (json_decode($tour['images'], true))[0];
+            foreach($toursList as $index => $tour) {
+                $listTour[$index]["price_special"] = $tour["price"] * (1 - $tour["discount"] / 100);
+                $listTour[$index]["image"] = (json_decode($tour["images"], true))[0];
             }
 
             

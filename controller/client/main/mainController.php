@@ -12,6 +12,7 @@
             $stmt= $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
             print_r($result[0]);
             include "views/client/pages/main/index.php";
         }

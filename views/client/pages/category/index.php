@@ -15,7 +15,7 @@
       <?php foreach ($query as $item): ?>
         <div class="col-6 mb-3">
           <div class="card">
-            <!-- <img src="public/client/upload/<?=htmlspecialchars($item['image']); ?>" alt="<?= htmlspecialchars($item['title']); ?>"> -->
+            <img src="public/client/upload/<?=htmlspecialchars($item['image']); ?>" alt="<?= htmlspecialchars($item['title']); ?>">
               <img src="<?=htmlspecialchars($item['image']); ?>" alt="<?= htmlspecialchars($item['title']); ?>">
             <div class="card-body">
               <h5 class="card-title"><?= htmlspecialchars($item['title']); ?></h5>
