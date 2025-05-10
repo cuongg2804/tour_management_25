@@ -117,7 +117,6 @@
         }
 
         public function createPost() {
-
             if($_POST){
                 $title = $_POST["title"];
                 $price = $_POST["price"];
@@ -132,83 +131,118 @@
 
                 $anh = []; // Mảng lưu tên các ảnh
 
-// Kiểm tra nếu có ảnh được gửi lên
-if (isset($_FILES["images"]) && !empty($_FILES["images"]["name"][0])) {
-    // Đường dẫn đến thư mục lưu ảnh
-    $uploadDir = "C:/xampp/htdocs/tour_management/public/client/upload/tour/";
+                // Kiểm tra nếu có ảnh được gửi lên
+                if (isset($_FILES["images"]) && !empty($_FILES["images"]["name"][0])) {
+                // Đường dẫn đến thư mục lưu ảnh
+                    $uploadDir = "C:/xampp/htdocs/tour_management/public/client/upload/tour/";
 
-    // Kiểm tra nếu thư mục chưa tồn tại, tạo mới thư mục
-    if (!file_exists($uploadDir)) {
-        mkdir($uploadDir, 0755, true);
-    }
+                    // Kiểm tra nếu thư mục chưa tồn tại, tạo mới thư mục
+                    if (!file_exists($uploadDir)) {
+                        mkdir($uploadDir, 0755, true);
+                    }
 
 
-    // Lặp qua từng ảnh được gửi lên
-    foreach ($_FILES["images"]["name"] as $key => $name) {
-        // Kiểm tra nếu không có lỗi trong quá trình upload
-        if ($_FILES["images"]["error"][$key] === UPLOAD_ERR_OK) {
-            $tmpName = $_FILES["images"]["tmp_name"][$key];
-            // Tạo tên ảnh mới để tránh trùng lặp
-            $uniqueName = time() . '_' . basename($name);
-            // Đường dẫn đầy đủ để lưu ảnh
-            $uploadPath = $uploadDir . $uniqueName;
+                    // Lặp qua từng ảnh được gửi lên
+                    foreach ($_FILES["images"]["name"] as $key => $name) {
+                        // Kiểm tra nếu không có lỗi trong quá trình upload
+                        if ($_FILES["images"]["error"][$key] === UPLOAD_ERR_OK) {
+                            $tmpName = $_FILES["images"]["tmp_name"][$key];
+                            // Tạo tên ảnh mới để tránh trùng lặp
+                            $uniqueName = time() . '_' . basename($name);
+                            // Đường dẫn đầy đủ để lưu ảnh
+                            $uploadPath = $uploadDir . $uniqueName;
 
-            // Di chuyển file từ thư mục tạm tới thư mục đích
-            if (move_uploaded_file($tmpName, $uploadPath)) {
-                $anh[] = $uniqueName; // Lưu tên ảnh vào mảng $anh
-                echo "Đã lưu ảnh: $uploadPath<br>"; // Hiển thị thông báo nếu ảnh đã lưu thành công
-            } else {
-                echo "Lỗi: Không thể lưu file tại đường dẫn: $uploadPath<br>"; // Thông báo lỗi nếu không thể lưu ảnh
-            }
-        } else {
-            echo "Lỗi upload file: " . $_FILES["images"]["error"][$key] . "<br>"; // Thông báo lỗi nếu có lỗi trong quá trình upload
-        }
-    }
-}
+                            // Di chuyển file từ thư mục tạm tới thư mục đích
+                            if (move_uploaded_file($tmpName, $uploadPath)) {
+                                $anh[] = $uniqueName; // Lưu tên ảnh vào mảng $anh
+                                echo "Đã lưu ảnh: $uploadPath<br>"; // Hiển thị thông báo nếu ảnh đã lưu thành công
+                            } else {
+                                echo "Lỗi: Không thể lưu file tại đường dẫn: $uploadPath<br>"; // Thông báo lỗi nếu không thể lưu ảnh
+                            }
+                        } else {
+                            echo "Lỗi upload file: " . $_FILES["images"]["error"][$key] . "<br>"; // Thông báo lỗi nếu có lỗi trong quá trình upload
+                        }
+                    }
+                }
 
+                        
+                $jsonImages = json_encode($anh);
+
+                    $slug = $this->create_slug($title);
+
+                    $sql = "INSERT INTO tours (title, price, discount, information, schedule, timeStart, stock, status,slug, images, deleted, createdAt) 
+                    VALUES (:title, :price, :discount, :information, :schedule, :timeStart, :stock, :status,:slug, :images, 0, now())";
+
+                    $stmt = $this->conn->prepare($sql);
+
+                    $stmt->bindValue(":title", $title);
+                    $stmt->bindValue(":price", $price);
+                    $stmt->bindValue(":discount", $discount);
+                    $stmt->bindValue(":information", $information);
+                    $stmt->bindValue(":schedule", $schedule);
+                    $stmt->bindValue(":timeStart", $timeStart);
+                    $stmt->bindValue(":stock", $stock);
+                    $stmt->bindValue(":status", $status);
+                    $stmt->bindValue(":slug", $slug);
+
+                    $stmt->bindValue(":images", json_encode($anh));
+
+                    $query = $stmt->execute();
+
+                    $newID = $this->conn->lastInsertId();
+                    $code = 'TOUR' . str_pad($newID, 6, '0', STR_PAD_LEFT);
+
+                    $sql = "UPDATE tours SET code = :code WHERE id = :id";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->bindValue(':code', $code);
+                    $stmt->bindValue(':id', $newID);
+                    $stmt->execute();
+
+                    $sql = "insert into tours_categories (tour_id, category_id) values ($newID, $category_id)";
+                    $stmt = $this->conn->prepare($sql);
+                    $stmt->execute();
+
+                    if ($query) {
+                        header("Location:index");  // Chuyển hướng sau khi thành công
+                    } else {
+                        echo "THÊM THẤT BẠI, VUI LÒNG THỬ LẠI!!";  // Thông báo nếu không thành công
+                    }
+                    }
+                }
             
-            $jsonImages = json_encode($anh);
+        
+        public function edit($url){
+           $id = $url[3];
 
-            $slug = $this->create_slug($title);
+            // 1. Lấy thông tin tour
+            $sql = "SELECT * FROM tours WHERE id = :id AND deleted = 0 LIMIT 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['id' => $id]);
+            $tour = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            $sql = "INSERT INTO tours (title, price, discount, information, schedule, timeStart, stock, status,slug, images, deleted, createdAt) 
-        VALUES (:title, :price, :discount, :information, :schedule, :timeStart, :stock, :status,:slug, :images, 0, now())";
+            // 2. Lấy danh sách danh mục còn hoạt động
+            $sql = "SELECT * FROM categories WHERE deleted = 0 AND status = 'active'";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $stmt = $this->conn->prepare($sql);
+            // 3. Lấy category_id từ bảng liên kết
+            $sql = "SELECT category_id FROM tours_categories WHERE tour_id = :tour_id LIMIT 1";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(['tour_id' => $id]);
+            $tour_category = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt->bindValue(":title", $title);
-        $stmt->bindValue(":price", $price);
-        $stmt->bindValue(":discount", $discount);
-        $stmt->bindValue(":information", $information);
-        $stmt->bindValue(":schedule", $schedule);
-        $stmt->bindValue(":timeStart", $timeStart);
-        $stmt->bindValue(":stock", $stock);
-        $stmt->bindValue(":status", $status);
-        $stmt->bindValue(":slug", $slug);
-
-        $stmt->bindValue(":images", json_encode($anh));
-
-        $query = $stmt->execute();
-
-        $newID = $this->conn->lastInsertId();
-        $code = 'TOUR' . str_pad($newID, 6, '0', STR_PAD_LEFT);
-
-        $sql = "UPDATE tours SET code = :code WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':code', $code);
-        $stmt->bindValue(':id', $newID);
-        $stmt->execute();
-
-        $sql = "insert into tours_categories (tour_id, category_id) values ($newID, $category_id)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->execute();
-
-        if ($query) {
-            header("Location:index");  // Chuyển hướng sau khi thành công
-        } else {
-            echo "THÊM THẤT BẠI, VUI LÒNG THỬ LẠI!!";  // Thông báo nếu không thành công
-        }
+            // 4. Gán category_id vào tour (nếu có)
+            if ($tour_category) {
+                $tour['category_id'] = $tour_category['category_id'];
+            } else {
+                $tour['category_id'] = null;
+            }
+            
+            $pageTitle ="Sửa ".$tour["title"];
+            $images = json_decode($tour['images'] ?? '[]', true);
+        
+            include "views/admin/pages/tour/edit.php";
         }
     }
-}
 ?>

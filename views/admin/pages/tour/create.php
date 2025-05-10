@@ -100,26 +100,16 @@
         />
     </div>
 
-    <!-- <div class="custom-file-container" data-upload-id="upload-images">
-    <label>Hình ảnh</label>
-    <br>
-    <label class="custom-file-container__custom-file">
-        <input type="file"
-            class="custom-file-container__custom-file__custom-file-input"
-            name="images[]"
-            accept="image/*"
-            multiple>
-        <span class="custom-file-container__custom-file__custom-file-control"></span>
-    </label>
-    <div class="custom-file-container__image-preview"></div>
-    </div> -->
-
-    <div class="custom-file-container" data-upload-id="upload-images">
-    <a href="javascript:void(0)" class="custom-file-container__image-clear">x</a>
-    <input type="file" class="custom-file-container__custom-file__custom-file-input" accept="image/*" multiple>
-    <span class="custom-file-container__custom-file__custom-file-control"></span>
-    <div class="custom-file-container__image-preview"></div>
-</div>
+    <div class="form-group">
+        <div class="custom-file-container" data-upload-id="upload-images">
+                <input type="file" id="fileInput" name="images[]" class="custom-file-container__custom-file__custom-file-input" accept="image/*" multiple>
+                <label for="fileInput" class="custom-file-container__custom-file__custom-file-control" >
+                    Chọn ảnh
+                </label>
+                <div class="custom-file-container__image-preview">
+                </div>
+            </div>
+    </div>
 
 
     <div class="form-group">

@@ -14,10 +14,8 @@
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/file-upload-with-preview@6.1.2/dist/style.css"
-    >
+    <link rel="stylesheet" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css" />
+
     <link rel="stylesheet" href="public/admin/css/style.css">
   </head>
 <body>
