@@ -1,5 +1,5 @@
 <?php 
-    include __DIR__ . "./../../controller/admin/tourController.php";
+    include __DIR__ . "../../controller/admin/tourController.php";
     class tourRouter extends index{
         public function index ($url)
         {

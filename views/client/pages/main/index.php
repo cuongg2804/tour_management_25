@@ -61,17 +61,25 @@
       </div>
     </div>
     <div class="section-3">
-      <div class="container">
-        <div class="section-3__wrap">
-          <div class="section-3__image"><img src="assets/images/image-2.png" alt="Thêm Một Bạn" data-aos="fade-up" data-aos-duration="800"></div>
-          <div class="section-3__content">
-            <h2 class="section-3__title" data-aos="fade-up" data-aos-duration="800">Thêm Một Bạn</h2>
-            <h3 class="section-3__sub-title" data-aos="fade-up" data-aos-duration="800" data-aos-delay="150">Thêm Ngàn Niềm Vui!</h3>
-            <p class="section-3__desc" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">Có một con thú cưng đồng nghĩa với việc bạn có thêm niềm vui mới. Chúng tôi có hơn 200 con thú cưng khác nhau có thể đáp ứng nhu cầu của bạn!</p>
-            <div class="section-3__buttons"><a class="button" href="#" data-aos="fade-up" data-aos-duration="800" data-aos-delay="450">Giới Thiệu <i class="fa-regular fa-circle-play"></i></a><a class="button button--primiry" href="#" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">Khám Phá Ngay</a></div>
+      <?php?>
+        <div class="container">
+          <div class="section-3__wrap">
+            <div class="section-3__image">
+              <a href="tour/detail/<?= htmlspecialchars($tour['slug'])?>">
+              <img src="<?= htmlspecialchars(json_decode($tour['images'])[0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>" data-aos="fade-up" data-aos-duration="800">
+              </a>
+            </div>
+            <div class="section-3__content">
+              <h2 class="section-3__title" data-aos="fade-up" data-aos-duration="800">Tour đang Hot</h2>
+              <h3 class="section-3__sub-title" data-aos="fade-up" data-aos-duration="800" data-aos-delay="150"><?= htmlspecialchars($tour['title']) ?></h3>
+              <p class="section-3__desc" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300"><?= htmlspecialchars($tour['schedule']) ?></p>
+              
+              <a class="button button--primiry" href="tour/detail/<?= htmlspecialchars($tour['slug'])?>" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">Khám Phá Ngay</a>
+             
+            </div>
           </div>
         </div>
-      </div>
+      <?php?>
     </div>
     <div class="section-4">
       <div class="container">
@@ -87,7 +95,7 @@
             <div class="section-4__item">
               <div class="section-4__image">
                 <a href="/tour/<?= htmlspecialchars($tour['slug']) ?>">
-                  <img src="<?= htmlspecialchars($tour['images'][0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>">
+                  <img src="<?= htmlspecialchars(json_decode($tour['images'])[0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>">
                 </a>
               </div>
               <div class="section-4__content">

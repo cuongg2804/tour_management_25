@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/tour_management/public/client/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $pageTitle?></title>
     <base href="/tour_management/">
@@ -11,22 +11,19 @@
     <link rel="stylesheet" href="https://unpkg.com/file-upload-with-preview/dist/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-    <link rel="stylesheet" href="public/client/css/style.css">
+    
   </head>
 <body>
 
 <header class="header">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-3">
-          <div class="inner-logo">
+      <div class="header__wrap">
+          <div class="header__logo">
             <a href="main">
-              <img src="public/client/image/OIP.jpg" alt="Logo">
+              <img src="public/client/image/logo.png" alt="Logo">
             </a>
           </div>
-        </div>
-        <div class="col-9">
-          <div class="inner-menu">
+          <div class="header__menu">
             <ul>
               <li>
                 <a href="main">Trang chủ</a>
@@ -39,7 +36,6 @@
               </li>
             </ul>
           </div>
-        </div>
       </div>
     </div>
   </header>

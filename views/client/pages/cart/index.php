@@ -2,10 +2,12 @@
     include "./views/client/partials/header.php";
 ?>
 
+<div class="cart">
+<div class="container">
 <div class="row">
     <div class="col-12">
-      <table class="table table-bordered" table-cart>
-      
+      <table class="table table-bordered" table-cart>      
+          <thead>
           <tr>
             <th>STT</th>
             <th>Ảnh</th>
@@ -15,6 +17,18 @@
             <th>Tổng tiền</th>
             <th>Hành động</th>
           </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
       </table>
       <h5 class="text-right mb-4">
         Tổng đơn hàng: <span total-price>0</span>đ
@@ -68,6 +82,8 @@
       </form>
     </div>
   </div>
+</div>
+</div>
 </div>
 
 <?php 

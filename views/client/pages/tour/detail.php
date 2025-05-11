@@ -2,8 +2,6 @@
     include "./views/client/partials/header.php";
 ?>
 
-
-
 <div class="alert alert-success alert-hidden" alert-add-cart-success>
   Đã thêm tour vào giỏ hàng! <span>x</span>
 </div>
@@ -19,7 +17,7 @@
                 <?php foreach ($tourDetail['images'] as $image): ?>
                   <div class="swiper-slide">
                     <div class="inner-image">
-                      <img src="public/client/upload/tour/<?=htmlspecialchars($image); ?>" alt="<?= htmlspecialchars($tourDetail['title']); ?>">
+                      <img src="<?=htmlspecialchars($image)?>" alt="<?= htmlspecialchars($tourDetail['title']); ?>">
                     </div>
                   </div>
                 <?php endforeach; ?>
