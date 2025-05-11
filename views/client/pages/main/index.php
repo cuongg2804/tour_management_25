@@ -10,14 +10,17 @@
             <h2 class="section-1__sub-title" data-aos="fade-up" data-aos-duration="800" data-aos-delay="150">Trải nghiệm mới!</h2>
             <p class="section-1__desc" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">Bạn xứng đáng với những chuyến đi đáng nhớ!
             Chúng tôi có hơn 300 tour du lịch trong và ngoài nước để bạn khám phá thế giới theo cách riêng của mình!</p>
-            <div class="section-1__buttons"><a class="button" href="#" data-aos="fade-up" data-aos-duration="800" data-aos-delay="450">Giới Thiệu <i class="fa-regular fa-circle-play"></i></a><a class="button button--primiry" href="#" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">Khám Phá Ngay</a></div>
+            <div class="section-1__buttons">
+              <a class="button" href="#" data-aos="fade-up" data-aos-duration="800" data-aos-delay="450">Giới Thiệu <i class="fa-regular fa-circle-play"></i></a>
+              <a class="button button--primiry" href="/tour_management/category" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">Khám Phá Ngay</a>
+            </div>
           </div>
           <div class="section-1__image"><img class="section-1__thumb" src="public/client/image/image1.png" data-aos="fade-up" data-aos-duration="800" data-aos-delay="450"><img class="section-1__bg-3" src="public/client/image/section-1-bg-3.svg" data-aos="fade-up" data-aos-duration="800" data-aos-delay="150"></div>
        
         </div>
       </div>
     </div>
-    <div class="section-2">
+    <div class="section-2" id="section-2">
       <div class="container">
         <div class="box-head">
           <div class="box-head__left">
@@ -94,7 +97,7 @@
           <?php foreach ($result as $tour): ?>
             <div class="section-4__item">
               <div class="section-4__image">
-                <a href="/tour/<?= htmlspecialchars($tour['slug']) ?>">
+                <a href="/tour/detail/<?= htmlspecialchars($tour['slug']) ?>">
                   <img src="<?= htmlspecialchars(json_decode($tour['images'])[0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>">
                 </a>
               </div>
