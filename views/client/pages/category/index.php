@@ -12,7 +12,7 @@
         <?php foreach ($query as $item): ?>
             <div class="cate-wrap__item">
                 <div class="cate-wrap__image">
-                  <img src="<?=htmlspecialchars($item['image']); ?>" alt="<?= htmlspecialchars($item['title']); ?>">
+                  <img src="public/client/upload/<?=htmlspecialchars($item['image']); ?>" alt="<?= htmlspecialchars($item['title']); ?>">
                 </div>
                 <div class="cate-wrap__content">
                   <div class="cate-wrap__right">

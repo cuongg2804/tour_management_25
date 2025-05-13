@@ -10,11 +10,11 @@
         }
         public function index()
         {
-            $sql ='SELECT * FROM categories';
+            $sql ='SELECT * FROM categories where deleted = 0';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $query = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+            $pageTitle = "Danh mục";
             include "views/client/pages/category/index.php";
             
         }

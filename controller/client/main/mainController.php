@@ -12,7 +12,7 @@
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+            $pageTitle ="Trang chủ";
             include "views/client/pages/main/index.php";
 
         }

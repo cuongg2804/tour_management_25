@@ -241,7 +241,7 @@
             
             $pageTitle ="Sửa ".$tour["title"];
             $images = json_decode($tour['images'] ?? '[]', true);
-            print_r($images);
+         
             include "views/admin/pages/tour/edit.php";
         }
 

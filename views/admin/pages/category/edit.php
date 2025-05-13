@@ -40,7 +40,7 @@
         upload-image-input
       >
      <img
-          src="<?= htmlspecialchars($detailCategory["image"]) ?>"
+          src="public/client/upload/<?= htmlspecialchars($detailCategory["image"]) ?>"
           class="image-preview"
           upload-image-preview
         >

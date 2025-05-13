@@ -75,7 +75,8 @@
             <div class="section-3__content">
               <h2 class="section-3__title" data-aos="fade-up" data-aos-duration="800">Tour đang Hot</h2>
               <h3 class="section-3__sub-title" data-aos="fade-up" data-aos-duration="800" data-aos-delay="150"><?= htmlspecialchars($tour['title']) ?></h3>
-              <p class="section-3__desc" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300"><?= htmlspecialchars($tour['schedule']) ?></p>
+              <p class="section-3__desc" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300"><?= html_entity_decode($tour['schedule']) ?>
+</p>
               <a class="button button--primiry" href="tour/detail/<?= htmlspecialchars($tour['slug'])?>" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">Khám Phá Ngay</a>
              
             </div>
@@ -88,7 +89,7 @@
         <div class="box-head">
           <div class="box-head__left">
             <div class="box-head__sub-title">Có thể bạn đã biết?</div>
-            <h2 class="box-head__title">Kiến thức thú cưng hữu ích</h2>
+            <h2 class="box-head__title"></h2>
           </div>
           <div class="box-head__right"><a class="button" href="#">Xem thêm <i class="fa-solid fa-angle-right"></i></a></div>
         </div>
@@ -107,7 +108,7 @@
                     <?= htmlspecialchars($tour['title']) ?>
                   </a>
                 </h3>
-                <div class="section-4__desc"><?= nl2br(htmlspecialchars($tour['information'])) ?></div>
+                <!-- <div class="section-4__desc"><?= nl2br(htmlspecialchars($tour['information'])) ?></div> -->
               </div>
             </div>
           <?php endforeach; ?>
