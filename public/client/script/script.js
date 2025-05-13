@@ -158,7 +158,6 @@ const deleteOrder = () =>{
  const formOrder = document.querySelector("#form-order");
  console.log(formOrder);
 if(formOrder) {
-  
   formOrder.addEventListener("submit", (event) => {
     event.preventDefault();
     const fullName = formOrder.querySelector("input[name='fullName']");

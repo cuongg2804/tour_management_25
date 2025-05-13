@@ -28,12 +28,12 @@
             $toursList = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             foreach ($toursList as &$tour) {
-    $tour["price_special"] = $tour["price"] * (1 - $tour["discount"] / 100);
+                $tour["price_special"] = $tour["price"] * (1 - $tour["discount"] / 100);
 
-    $images = json_decode($tour["images"], true);
-    $tour["image"] = $images[0] ?? null;
-}
-unset($tour); // tránh lỗi tham chiếu ngoài vòng lặp
+                $images = json_decode($tour["images"], true);
+                $tour["image"] = $images[0] ?? null;
+            }
+            unset($tour); // tránh lỗi tham chiếu ngoài vòng lặp
 
             
             $sql = "SELECT title from categories where slug = :slug ";

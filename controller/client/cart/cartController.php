@@ -64,91 +64,111 @@
             ]);
         }
 
-        public function order(){
-            header('Content-Type: application/json');
+        public function order() {
+    header('Content-Type: application/json');
 
-            // Lấy dữ liệu từ fetch
-            $rawData = file_get_contents("php://input");
-            $data = json_decode($rawData, true);
-        
-            if (!$data || !isset($data['info']) || !isset($data['cart'])) {
-                echo json_encode([
-                    'code' => 400,
-                    'message' => 'Dữ liệu không hợp lệ'
-                ]);
-                return;
-            }
-        
-            $info = $data['info'];
-            $cart = $data['cart'];
-         
-        
-            try {
-                // Bắt đầu transaction
-                $this->conn->beginTransaction();
-        
-                // 1. Tạo đơn hàng
-                $stmt = $this->conn->prepare("INSERT INTO orders (fullName, phone, note, status, deleted, createdAt, updatedAt) VALUES (:fullName, :phone, :note, 'initial',0, now(),now() )");
-                $stmt->execute([
-                    ':fullName' => $info['fullName'],
-                    ':phone' => $info['phone'],
-                    ':note' => $info['note']
-                ]);
-                $orderId = $this->conn->lastInsertId();
-        
-                // 2. Tạo mã đơn hàng từ ID (ví dụ đơn giản)
-                $code = 'ORD'.str_pad($orderId, 6, '0', STR_PAD_LEFT);
-        
-                // 3. Cập nhật mã đơn hàng
-                $stmt = $this->conn->prepare("UPDATE orders SET code = :code WHERE id = :id");
-                $stmt->execute([
-                    ':code' => $code,
-                    ':id' => $orderId
-                ]);
-        
-                // 4. Thêm từng tour vào bảng order_items
-                foreach ($cart as $tour) {
-                    // Lấy thông tin tour
-                    $stmt = $this->conn->prepare("SELECT * FROM tours WHERE id = :id AND deleted = 0 AND status = 'active'");
-                    $stmt->execute([':id' => $tour['tourId']]);
-                    $inforTour = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-                    if ($inforTour) {
-                        $stmt = $this->conn->prepare("
-                            INSERT INTO orders_item (orderId, tourId, quantity, price, discount, timeStart)
-                            VALUES (:orderId, :tourId, :quantity, :price, :discount, :timeStart)
-                        ");
-                        $stmt->execute([
-                            ':orderId' => $orderId,
-                            ':tourId' => $tour['tourId'],
-                            ':quantity' => $tour['quantity'],
-                            ':price' => $inforTour['price'],
-                            ':discount' => $inforTour['discount'],
-                            ':timeStart' => $inforTour['timeStart']
-                        ]);
-                    }
+    // Lấy dữ liệu từ fetch
+    $rawData = file_get_contents("php://input");
+    $data = json_decode($rawData, true);
+
+    if (!$data || !isset($data['info']) || !isset($data['cart'])) {
+        echo json_encode([
+            'code' => 400,
+            'message' => 'Dữ liệu không hợp lệ'
+        ]);
+        return;
+    }
+
+    $info = $data['info'];
+    $cart = $data['cart'];
+
+    try {
+        // Bắt đầu transaction
+        $this->conn->beginTransaction();
+
+        // 1. Tạo đơn hàng
+        $stmt = $this->conn->prepare("INSERT INTO orders (fullName, phone, note, status, deleted, createdAt, updatedAt)
+                                      VALUES (:fullName, :phone, :note, 'initial', 0, NOW(), NOW())");
+        $stmt->execute([
+            ':fullName' => $info['fullName'],
+            ':phone' => $info['phone'],
+            ':note' => $info['note']
+        ]);
+        $orderId = $this->conn->lastInsertId();
+
+        // 2. Tạo mã đơn hàng
+        $code = 'ORD' . str_pad($orderId, 6, '0', STR_PAD_LEFT);
+
+        // 3. Cập nhật mã đơn hàng
+        $stmt = $this->conn->prepare("UPDATE orders SET code = :code WHERE id = :id");
+        $stmt->execute([
+            ':code' => $code,
+            ':id' => $orderId
+        ]);
+
+        // 4. Xử lý từng tour trong giỏ hàng
+        foreach ($cart as $tour) {
+            // Lấy thông tin tour
+            $stmt = $this->conn->prepare("SELECT * FROM tours WHERE id = :id AND deleted = 0 AND status = 'active'");
+            $stmt->execute([':id' => $tour['tourId']]);
+            $inforTour = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($inforTour) {
+                $availableStock = (int)$inforTour['stock'];
+                $quantity = (int)$tour['quantity'];
+
+                if ($availableStock < $quantity) {
+                    // Nếu không đủ số lượng -> huỷ giao dịch
+                    $this->conn->rollBack();
+                    echo json_encode([
+                        'code' => 409,
+                        'message' => 'Số lượng tour "' . $inforTour['title'] . '" không đủ. Còn lại: ' . $availableStock
+                    ]);
+                    return;
                 }
-        
-                // Commit transaction
-                $this->conn->commit();
-        
-                echo json_encode([
-                    'code' => 200,
-                    'message' => 'Đặt hàng thành công!',
-                    'orderCode' => $code
+
+                // 5. Thêm vào bảng orders_item
+                $stmt = $this->conn->prepare("INSERT INTO orders_item (orderId, tourId, quantity, price, discount, timeStart)
+                                              VALUES (:orderId, :tourId, :quantity, :price, :discount, :timeStart)");
+                $stmt->execute([
+                    ':orderId' => $orderId,
+                    ':tourId' => $tour['tourId'],
+                    ':quantity' => $quantity,
+                    ':price' => $inforTour['price'],
+                    ':discount' => $inforTour['discount'],
+                    ':timeStart' => $inforTour['timeStart']
                 ]);
-            } catch (Exception $e) {
-                $this->conn->rollBack();
-                echo json_encode([
-                    'code' => 200,
-                    'message' => 'Lỗi hệ thống: ' . $e->getMessage()
+
+                // 6. Trừ số lượng tour đã đặt
+                $stmt = $this->conn->prepare("UPDATE tours SET stock = stock - :quantity WHERE id = :id");
+                $stmt->execute([
+                    ':quantity' => $quantity,
+                    ':id' => $tour['tourId']
                 ]);
             }
-
         }
+
+        // 7. Hoàn tất giao dịch
+        $this->conn->commit();
+
+        echo json_encode([
+            'code' => 200,
+            'message' => 'Đặt hàng thành công!',
+            'orderCode' => $code
+        ]);
+        } catch (Exception $e) {
+            $this->conn->rollBack();
+            echo json_encode([
+                'code' => 500,
+                'message' => 'Lỗi hệ thống: ' . $e->getMessage()
+            ]);
+        }
+}
+
         
 
         public function success ($url){
+            print_r($_GET);
             if (!isset($url[2])) {
                 echo "Thiếu mã đơn hàng.";
                 return;
@@ -192,8 +212,8 @@
             }
     
             // 3. Gửi dữ liệu sang view
-            // $pageTitle = "Đặt hàng thành công!";
-            // include "views/client/pages/cart/success.php";
+            $pageTitle = "Đặt hàng thành công!";
+            include "views/client/pages/cart/success.php";
         }
         
     }

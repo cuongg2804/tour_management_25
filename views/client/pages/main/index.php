@@ -1,6 +1,7 @@
 <?php
   include "views/client/partials/header.php";
 ?>
+
     <div class="section-1">
       <div class="container">
         <div class="section-1__wrap">

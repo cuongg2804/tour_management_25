@@ -23,6 +23,21 @@
               <img src="public/client/image/logo.png" alt="Logo">
             </a>
           </div>
+          <div class="col-5">
+            <form action="search" method="GET">
+              <div class="form-group d-flex mb-0">
+                <input 
+                  type="text" 
+                  placeholder="Nhập từ khóa..." 
+                  class="form-control" 
+                  name="keyword" 
+                  value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>"
+                >
+                <button type="submit" class="btn btn-primary">Tìm</button>
+              </div>
+            </form>
+          </div>
+
           <div class="header__menu">
             <ul>
               <li>
