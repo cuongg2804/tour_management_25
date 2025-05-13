@@ -60,7 +60,7 @@ unset($tour); // tránh lỗi tham chiếu ngoài vòng lặp
             $tourDetail = $stmt->fetch(PDO::FETCH_ASSOC);
             
             $tourDetail['images'] = json_decode($tourDetail['images'], true);
-        
+                $pageTitle ="Chi tiết ".$tourDetail["title"];
             include "views/client/pages/tour/detail.php";
             }
         }

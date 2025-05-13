@@ -86,7 +86,7 @@ const drawCart = () => {
       const html = data.listTour.map((item, index) => `
         <tr>
             <td>${index+1}</td>
-            <td><img src="${item.image}" alt="${item.title}" width="80px" /></td>
+            <td><img src="public/client/upload/tour/${item.image}" alt="${item.title}" width="80px" /></td>
             <td><a href="/tours/detail/${item.slug}">${item.title}</a></td>
             <td>${item.price_special.toLocaleString()}đ</td>
             <td><input type="number" name="quantity" value="${item.quantity}" min="1" item-id="${item.id}" style="width: 60px" ></td>

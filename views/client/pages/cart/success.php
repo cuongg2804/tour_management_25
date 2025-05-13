@@ -61,7 +61,7 @@
     <td><?= $index + 1 ?></td>
     <td>
  
-            <img src="<?= $tour["image"] ?>" alt="Ảnh tour" height="60">
+            <img src="<?= "public/client/upload/tour/".$tour["image"] ?>" alt="Ảnh tour" height="60">
    
     </td>
     <td><?= htmlspecialchars($tour['title']) ?></td>

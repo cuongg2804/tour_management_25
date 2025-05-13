@@ -192,8 +192,8 @@
             }
     
             // 3. Gửi dữ liệu sang view
-            $pageTitle = "Đặt hàng thành công!";
-            include "views/client/pages/cart/success.php";
+            // $pageTitle = "Đặt hàng thành công!";
+            // include "views/client/pages/cart/success.php";
         }
         
     }
