@@ -241,23 +241,13 @@
             
             $pageTitle ="Sửa ".$tour["title"];
             $images = json_decode($tour['images'] ?? '[]', true);
-        
+            print_r($images);
             include "views/admin/pages/tour/edit.php";
         }
 
         public function editPost($url){
             if($_SERVER["REQUEST_METHOD"] === "POST"){
-                if(isset($_POST['title']) &&
-                isset($_POST['category_id']) &&
-                isset($_POST['price']) &&
-                isset($_POST['discount']) &&
-                isset($_POST['stock']) &&
-                isset($_POST['timeStart']) &&
-                isset($_POST['information']) &&
-                isset($_POST['schedule']) &&
-                isset($_POST['status']) &&
-                isset($_POST['existing_images']))
-                {
+                
                     $title = $_POST['title'] ;
                     $category_id = ($_POST['category_id']) ;
                     $price = ($_POST['price']) ;
@@ -270,24 +260,33 @@
                     $existingImages = ($_POST['existing_images']);
 
                     $existingImages = $_POST['existing_images'] ?? [];
-                    $uploadedImages = []; 
+                    $uploadedImages = [];
+                    $uploadDir =  __DIR__ . "/../../public/client/upload/tour/";// Đường dẫn tuyệt đối đến thư mục lưu ảnh
+         
 
                     if (!empty($_FILES['images']['name'][0])) {
                         foreach ($_FILES['images']['tmp_name'] as $i => $tmpName) {
                             if (is_uploaded_file($tmpName)) {
                                 $fileName = basename($_FILES['images']['name'][$i]);
-                                $targetPath =  $fileName;
-                                move_uploaded_file($tmpName, $targetPath);
-                                $uploadedImages[] = $targetPath;
+
+                                // Tạo đường dẫn lưu file vật lý
+                                $targetPath = $uploadDir . $fileName;
+
+                                // Di chuyển file vào thư mục đích
+                                if (move_uploaded_file($tmpName, $targetPath)) {
+                                    // Lưu đường dẫn tương đối để hiển thị lại ảnh
+                                    $uploadedImages[] = $fileName;
+                                }
                             }
                         }
                     }
 
-                    $allImages = array_merge($existingImages, $uploadedImages); 
+                    // Gộp ảnh cũ và ảnh mới
+                    $allImages = array_merge($existingImages, $uploadedImages);
 
-
-                    $allImages = array_merge($existingImages, $uploadedImages );
+                    // Chuyển thành JSON để lưu vào DB
                     $imagesJson = json_encode($allImages, JSON_UNESCAPED_SLASHES);
+
                     
                      // Giả sử bạn có biến $pdo là PDO kết nối
                     $sql = "UPDATE tours SET 
@@ -301,33 +300,29 @@
                     images = :images,
                     status = :status,
                     updatedAt= now()
-                WHERE id = :id";
+                    WHERE id = :id";
 
-                $stmt = $this->conn->prepare($sql);
-                $query = $stmt->execute([
-                    ':title' => $title,
-                    ':price' => $price,
-                    ':discount' => $discount,
-                    ':stock' => $stock,
-                    ':timeStart' => $timeStart,
-                    ':information' => $information,
-                    ':schedule' => $schedule,
-                    ':images' => $imagesJson,
-                    ':status' => $status,
-                    ':id' => $url[3] ?? 0 // hoặc $_POST['id'] nếu bạn truyền qua POST
+                    $stmt = $this->conn->prepare($sql);
+                    $query = $stmt->execute([
+                        ':title' => $title,
+                        ':price' => $price,
+                        ':discount' => $discount,
+                        ':stock' => $stock,
+                        ':timeStart' => $timeStart,
+                        ':information' => $information,
+                        ':schedule' => $schedule,
+                        ':images' => $imagesJson,
+                        ':status' => $status,
+                        ':id' => $url[3] ?? 0 // hoặc $_POST['id'] nếu bạn truyền qua POST
                 ]);
-                }
-
-                
-            if ($query) {
+                if ($query) {
                         header("Location:/tour_management/admin/tour");  // Chuyển hướng sau khi thành công
                         
                     } else {
                         echo "THÊM THẤT BẠI, VUI LÒNG THỬ LẠI!!";  // Thông báo nếu không thành công
                     }
-                    }
-
-                
+                    
+                }         
         }
     
         public function deletePost($url){

@@ -42,11 +42,11 @@
             <tr>
               <td><?= $index + 1 ?></td>
               <td>
-              <!-- <img src="public/client/upload/<?=htmlspecialchars($item['image']);?>" alt="<?= htmlspecialchars($item['title']); ?>"
-                     width="100px" height="auto"> -->
+              <img src="public/client/upload/<?=htmlspecialchars($item['image']);?>" alt="<?= htmlspecialchars($item['title']); ?>"
+                     width="100px" height="auto">
 
-              <img src="<?=htmlspecialchars($item['image']);?>" alt="<?= htmlspecialchars($item['title']); ?>"
-                width="100px" height="auto">
+              <!-- <img src="<?=htmlspecialchars($item['image']);?>" alt="<?= htmlspecialchars($item['title']); ?>"
+                width="100px" height="auto"> -->
               </td>
               <td><?= htmlspecialchars($item['title']) ?></td>
               <td>

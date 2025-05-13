@@ -8,12 +8,13 @@
             $this->conn = (new Database())->connectDB();
         }
         public function index() {
-            $sql="select * from tours";
-            $stmt= $this->conn->prepare($sql);
+            $sql = "SELECT * FROM tours WHERE deleted = 0";
+            $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            //print_r($result[0]);
+
             include "views/client/pages/main/index.php";
+
         }
     }
 ?>

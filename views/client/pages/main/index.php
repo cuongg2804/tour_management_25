@@ -33,7 +33,7 @@
     <?php foreach ($result as $tour): ?>
       <?php
         $images = json_decode($tour['images']);
-       // $imageUrl = $images[0]  ;
+        $imageUrl = $images[0]  ;
         $title = $tour['title'];
         $code = $tour['code'];
         $price = $tour['price'];
@@ -43,12 +43,12 @@
       <div class="section-2__item">
         <div class="section-2__image">
           <a href="tour/detail/<?= htmlspecialchars($tour['slug'])?>">
-            <!-- <img src="<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($code . ' - ' . $title) ?>"> -->
+            <img src="public/client/upload/tour/<?= htmlspecialchars($imageUrl) ?>" alt="<?= htmlspecialchars($code . ' - ' . $title) ?>">
           </a>
         </div>
         <div class="section-2__content">
           <h3 class="section-2__title">
-            <a href="tour/detail/<?= htmlspecialchars($tour['slug'])?>"><?= htmlspecialchars($code . ' - ' . $title) ?></a>
+            <a href="tour/detail/<?= htmlspecialchars($tour['slug'])?>"><?= htmlspecialchars( $title) ?></a>
           </h3>
           <div class="section-2__info">
             <!-- Các trường thông tin khác nếu có -->
@@ -69,14 +69,13 @@
           <div class="section-3__wrap">
             <div class="section-3__image">
               <a href="tour/detail/<?= htmlspecialchars($tour['slug'])?>">
-              <img src="<?= htmlspecialchars(json_decode($tour['images'])[0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>" data-aos="fade-up" data-aos-duration="800">
+              <img src="<?= "public/client/upload/tour/".htmlspecialchars(json_decode($tour['images'])[0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>" data-aos="fade-up" data-aos-duration="800">
               </a>
             </div>
             <div class="section-3__content">
               <h2 class="section-3__title" data-aos="fade-up" data-aos-duration="800">Tour đang Hot</h2>
               <h3 class="section-3__sub-title" data-aos="fade-up" data-aos-duration="800" data-aos-delay="150"><?= htmlspecialchars($tour['title']) ?></h3>
               <p class="section-3__desc" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300"><?= htmlspecialchars($tour['schedule']) ?></p>
-              
               <a class="button button--primiry" href="tour/detail/<?= htmlspecialchars($tour['slug'])?>" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">Khám Phá Ngay</a>
              
             </div>
@@ -98,7 +97,7 @@
             <div class="section-4__item">
               <div class="section-4__image">
                 <a href="/tour/detail/<?= htmlspecialchars($tour['slug']) ?>">
-                  <img src="<?= htmlspecialchars(json_decode($tour['images'])[0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>">
+                  <img src="<?= "public/client/upload/tour/".htmlspecialchars(json_decode($tour['images'])[0]) ?>" alt="<?= htmlspecialchars($tour['title']) ?>">
                 </a>
               </div>
               <div class="section-4__content">
