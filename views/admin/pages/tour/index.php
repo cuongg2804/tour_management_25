@@ -46,7 +46,7 @@
             <?php foreach ($listTour as $index => $item): ?>
               <tr>
                 <td><?= $index + 1 ?></td>
-                <td><img src="<?= $item['image'] ?>" alt="<?= $item['title'] ?>" width="100"></td>
+                <td><img src="<?=  "public/client/upload/tour/".$item['image'] ?>" alt="<?= $item['title'] ?>" width="100"></td>
                 <td><?= htmlspecialchars($item['title']) ?></td>
                 <td><?=number_format($item['price'], 0, ',', '.')?>đ</td>
                 <td><?= $item['discount'] ?>%</td>
@@ -63,7 +63,7 @@
                 <td>
                   <a href="admin/tour/detail/<?= $item['id'] ?>" class="btn btn-secondary btn-sm">Chi tiết</a>
                   <a href="admin/tour/edit/<?= $item['id'] ?>" class="btn btn-warning btn-sm ml-1">Sửa</a>
-                  <button class="btn btn-danger btn-sm ml-1" title="<?= $item['title'] ?>">Xóa</button>
+                  <button class="btn btn-danger btn-sm ml-1" title="<?= $item['title']?>" data-id= "<?= $item['id'] ?>" button-delete >Xóa</button>
                 </td>
               </tr>
             <?php endforeach; ?>
@@ -92,5 +92,8 @@
   </div>
 </div>
 </main>
+
+
+<?php include "views/admin/partials/footer.php"?>
 
 

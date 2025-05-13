@@ -1,6 +1,7 @@
 
     <?php
-    
+        session_start();
+        ini_set('memory_limit', '1024M'); // tăng giới hạn lên 1GB
 
         include "router/client/index.php";
         include "router/admin/index.php";

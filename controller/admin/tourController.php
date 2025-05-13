@@ -244,5 +244,102 @@
         
             include "views/admin/pages/tour/edit.php";
         }
+
+        public function editPost($url){
+            if($_SERVER["REQUEST_METHOD"] === "POST"){
+                if(isset($_POST['title']) &&
+                isset($_POST['category_id']) &&
+                isset($_POST['price']) &&
+                isset($_POST['discount']) &&
+                isset($_POST['stock']) &&
+                isset($_POST['timeStart']) &&
+                isset($_POST['information']) &&
+                isset($_POST['schedule']) &&
+                isset($_POST['status']) &&
+                isset($_POST['existing_images']))
+                {
+                    $title = $_POST['title'] ;
+                    $category_id = ($_POST['category_id']) ;
+                    $price = ($_POST['price']) ;
+                    $discount= ($_POST['discount']) ;
+                    $stock= ($_POST['stock']) ;
+                    $timeStart = ($_POST['timeStart']) ;
+                    $information = ($_POST['information']) ;
+                    $schedule = ($_POST['schedule']) ;
+                    $status= ($_POST['status']) ;
+                    $existingImages = ($_POST['existing_images']);
+
+                    $existingImages = $_POST['existing_images'] ?? [];
+                    $uploadedImages = []; 
+
+                    if (!empty($_FILES['images']['name'][0])) {
+                        foreach ($_FILES['images']['tmp_name'] as $i => $tmpName) {
+                            if (is_uploaded_file($tmpName)) {
+                                $fileName = basename($_FILES['images']['name'][$i]);
+                                $targetPath =  $fileName;
+                                move_uploaded_file($tmpName, $targetPath);
+                                $uploadedImages[] = $targetPath;
+                            }
+                        }
+                    }
+
+                    $allImages = array_merge($existingImages, $uploadedImages); 
+
+
+                    $allImages = array_merge($existingImages, $uploadedImages );
+                    $imagesJson = json_encode($allImages, JSON_UNESCAPED_SLASHES);
+                    
+                     // Giả sử bạn có biến $pdo là PDO kết nối
+                    $sql = "UPDATE tours SET 
+                    title = :title,
+                    price = :price,
+                    discount = :discount,
+                    stock = :stock,
+                    timeStart = :timeStart,
+                    information = :information,
+                    schedule = :schedule,
+                    images = :images,
+                    status = :status,
+                    updatedAt= now()
+                WHERE id = :id";
+
+                $stmt = $this->conn->prepare($sql);
+                $query = $stmt->execute([
+                    ':title' => $title,
+                    ':price' => $price,
+                    ':discount' => $discount,
+                    ':stock' => $stock,
+                    ':timeStart' => $timeStart,
+                    ':information' => $information,
+                    ':schedule' => $schedule,
+                    ':images' => $imagesJson,
+                    ':status' => $status,
+                    ':id' => $url[3] ?? 0 // hoặc $_POST['id'] nếu bạn truyền qua POST
+                ]);
+                }
+
+                
+            if ($query) {
+                        header("Location:/tour_management/admin/tour");  // Chuyển hướng sau khi thành công
+                        
+                    } else {
+                        echo "THÊM THẤT BẠI, VUI LÒNG THỬ LẠI!!";  // Thông báo nếu không thành công
+                    }
+                    }
+
+                
+        }
+    
+        public function deletePost($url){
+            $sql = "update tours set deleted = 1 where id = $url[3]";
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+            echo json_encode([
+                'code' => 200,
+                'data' => 'ok'
+            ]);
+        }
+
     }
 ?>

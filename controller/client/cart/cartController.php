@@ -88,7 +88,7 @@
                 $this->conn->beginTransaction();
         
                 // 1. Tạo đơn hàng
-                $stmt = $this->conn->prepare("INSERT INTO orders (fullName, phone, note, status) VALUES (:fullName, :phone, :note, 'initial')");
+                $stmt = $this->conn->prepare("INSERT INTO orders (fullName, phone, note, status, deleted, createdAt, updatedAt) VALUES (:fullName, :phone, :note, 'initial',0, now(),now() )");
                 $stmt->execute([
                     ':fullName' => $info['fullName'],
                     ':phone' => $info['phone'],

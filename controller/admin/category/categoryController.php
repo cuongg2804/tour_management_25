@@ -227,5 +227,17 @@ class categoryController {
         }
 
     }
+    public function delete($url){
+        $id = $url[3];
+
+        $sql = "update categories set deleted = 1 where id = $id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+            echo json_encode([
+                'code' => 200,
+                'data' => 'ok'
+            ]);     
+    }
 }
 ?>

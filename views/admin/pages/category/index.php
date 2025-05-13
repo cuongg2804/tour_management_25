@@ -93,3 +93,6 @@
     </div>
   </div>
 </div>
+
+
+<?php include "views/admin/partials/footer.php" ?>

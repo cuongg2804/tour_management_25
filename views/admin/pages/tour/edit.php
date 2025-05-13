@@ -4,7 +4,7 @@
 
 <h1 class="mb-4"><?= htmlspecialchars($pageTitle) ?></h1>
 
-<form action="/admin/tours/edit/<?= $tour['id'] ?>?_method=PATCH" method="POST" enctype="multipart/form-data">
+<form action="admin/tour/edit/<?= $tour['id'] ?>" method="POST" enctype="multipart/form-data">
   <div class="form-group">
     <label for="title">Tiêu đề</label>
     <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($tour['title']) ?>" required>
@@ -64,7 +64,7 @@
       <?php if (!empty($images)): ?>
         <?php foreach ($images as $index => $img): ?>
           <div class="preview-item" data-index="<?= $index ?>">
-            <img src="<?= htmlspecialchars($img) ?>" style="width: 350px;; border:1px solid #ccc; border-radius:4px;">
+            <img src="<?= "public/client/upload/tour/".htmlspecialchars($img) ?>" style="width: 350px;; border:1px solid #ccc; border-radius:4px;">
             <button type="button" class="image-clear" data-index="<?= $index ?>">x</button>
             <input type="hidden" name="existing_images[]" value="<?= htmlspecialchars($img) ?>">
           </div>

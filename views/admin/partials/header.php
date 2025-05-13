@@ -29,8 +29,8 @@
       </div>
       <div class="col-9">
         <div class="text-right">
-          <a href="/<%= prefixAdmin %>/my-account" class="btn btn-primary btn-sm mr-2">Le Van A</a>
-          <a href="/<%= prefixAdmin %>/auth/logout" class="btn btn-danger btn-sm">Đăng xuất</a>
+          <a href="admin/my-account" class="btn btn-primary btn-sm mr-2"><?php echo $_SESSION['user']['fullName'] ?></a>
+          <a href="admin/auth/logout" class="btn btn-danger btn-sm">Đăng xuất</a>
         </div>
       </div>
     </div>
