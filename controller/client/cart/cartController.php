@@ -171,13 +171,12 @@
             $stmt = $this->conn->prepare("SELECT * FROM orders_item WHERE orderId = :orderId");
             $stmt->execute([':orderId' => $order['id']]);
             $listOrderItem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
             $totalPrice = 0;
             foreach ($listOrderItem as &$item) {
                 $stmt = $this->conn->prepare("SELECT * FROM tours WHERE id = :id AND deleted = 0 AND status = 'active'");
                 $stmt->execute([':id' => $item['tourId']]);
                 $inforTour = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+ 
                 if ($inforTour) {
                     $item['title'] = $inforTour['title'];
     

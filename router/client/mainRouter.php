@@ -1,5 +1,5 @@
 <?php 
-     include __DIR__ . "./../../controller/client/main/mainController.php";
+     include __DIR__ . "/../../controller/client/main/mainController.php";
     class mainRouter{
        
         public function index ($url)

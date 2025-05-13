@@ -55,17 +55,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($listOrderItem as $index => $item): ?>
-                        <tr>
-                            <td><?= $index + 1 ?></td>
-                            <td><img src="<?= htmlspecialchars($item['image']) ?>" alt="<?= htmlspecialchars($item['title']) ?>" width="80px"></td>
-                            <td><a ><?= htmlspecialchars($item['title']) ?></a></td>
-                            <td><?= number_format($item['price_special']) ?>đ</td>
-                            <td><?= $item['quantity'] ?></td>
-                            <td><?= number_format($item['total']) ?>đ</td>
-                            <td><?= date('d/m/Y', strtotime($item['timeStart'])) ?></td>
-                        </tr>
-                    <?php endforeach; ?>
+                   
+<?php foreach ($listOrderItem as $index => $tour): ?>
+            <tr>
+    <td><?= $index + 1 ?></td>
+    <td>
+ 
+            <img src="<?= $tour["image"] ?>" alt="Ảnh tour" height="60">
+   
+    </td>
+    <td><?= htmlspecialchars($tour['title']) ?></td>
+    <td><?= number_format($tour['price']) ?>đ</td>
+    <td><?= $tour['quantity'] ?></td>
+    <td><?= number_format($tour['total'] ) ?>đ</td>
+    <td><?= date('d/m/Y H:i', strtotime($tour['timeStart'])) ?></td>
+</tr>
+        <?php endforeach; ?>
+
+
                 </tbody>
             </table>
 
