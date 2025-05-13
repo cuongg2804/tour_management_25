@@ -61,6 +61,10 @@ $permissionGroups = [
     'accounts-edit' => 'Chỉnh sửa',
     'accounts-delete' => 'Xóa'
   ]
+  ,
+  'Thống kê,  báo  cáo' => [
+    'reports-view' => 'Xem',
+  ]
   
 ];
 ?>

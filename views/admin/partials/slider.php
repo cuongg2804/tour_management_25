@@ -32,6 +32,10 @@
       <?php if (in_array('settings-general', $_SESSION['user']['permissions'])): ?>
         <li><a href="admin/settings/general">Cài đặt chung</a></li>
       <?php endif; ?>
+
+      <?php if (in_array('reports-view', $_SESSION['user']['permissions'])): ?>
+        <li><a href="admin/report">Báo cáo, thống kê</a></li>
+      <?php endif; ?>
     </ul>
   </div>
 </div>

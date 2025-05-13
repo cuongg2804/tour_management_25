@@ -3,7 +3,7 @@
     class tourRouter extends index{
         public function index ($url)
         {
-             if (isset($_SESSION['user']['permissions']) && in_array('product-view', $_SESSION['user']['permissions'])){
+             if (isset($_SESSION['user']['permissions']) && in_array('products-view', $_SESSION['user']['permissions'])){
                 $nameController = (isset($url[2])?$url[2] : "index");
                 if($_SERVER['REQUEST_METHOD'] === 'POST'){
                     $nameController.= "Post";

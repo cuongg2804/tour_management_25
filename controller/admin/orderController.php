@@ -82,7 +82,7 @@ public function index() {
         $order['products'] = $products;
         $order['totalPrice'] = $totalPrice;
     }
-
+    $pageTitle ="Quản lí đơn hàng";
     // Truyền dữ liệu cho view
     include "views/admin/pages/orders/index.php";
 }
