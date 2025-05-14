@@ -1,7 +1,7 @@
 <?php 
     include "views/admin/layouts/index.php";
 ?>
-
+<h1 class="mb-4">Chỉnh sửa danh mục</h1>
 <form
     action="admin/category/edit/<?= htmlspecialchars($detailCategory["id"]) ?>"
     method="POST"

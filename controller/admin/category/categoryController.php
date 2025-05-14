@@ -158,7 +158,7 @@ class categoryController {
         $stmt->execute();
 
         $detailCategory = $stmt->fetch();
-
+        $pageTitle = "Chi tiết ".$detailCategory["title"];
         print_r($detailCategory);
     }
 
@@ -171,7 +171,9 @@ class categoryController {
         $stmt->execute();
 
         $detailCategory = $stmt->fetch();
+        
 
+        $pageTitle="Chỉnh sửa ". $detailCategory["title"];
       
         include "views/admin/pages/category/edit.php";
 

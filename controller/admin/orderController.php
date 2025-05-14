@@ -151,7 +151,7 @@ public function index() {
                 $tour["image"] = (json_decode($tour["images"], true))[0] ?? null;
             }
 
-        
+        $pageTitle ="Chi tiết đơn hàng";
             include "views/admin/pages/orders/detail.php";
         }
 

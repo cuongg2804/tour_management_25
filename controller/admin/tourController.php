@@ -74,7 +74,7 @@
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetch();
-
+            $pageTitle = "Chi tiết ".$result["title"];
             print_r($result) ;
         }
 
@@ -112,7 +112,7 @@
             $stmt->execute();
             $category = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            
+            $pageTitle ="Thêm mới tour";
             include "views/admin/pages/tour/create.php";
         }
 

@@ -44,33 +44,41 @@ if(miniCart){
 
 showMiniCart();
 
-//Hiển thị số lượng vào giỏ hàng 
-const formCart = document.querySelector("[form-add-to-cart]");
-if(formCart) {
-    formCart.addEventListener("submit", (event) =>  {
-        event.preventDefault();
-        const idTour = (formCart.querySelector('input[name="tour_id"]')).value;
+const userId = "<?php echo $user_id; ?>"; // Lấy giá trị từ PHP
 
-        const quantity =  parseInt(formCart.querySelector("input").value);
-        
-        const cart = JSON.parse(localStorage.getItem("cart"));
-        
-        const existTour = cart.findIndex(item => item.tourId == idTour);
-        if(existTour == -1) {
-            cart.push ({
-                tourId : idTour,
-                quantity : quantity
-            })
+const formCart = document.querySelector("[form-add-to-cart]");
+if (formCart) {
+    formCart.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        // Kiểm tra nếu người dùng chưa đăng nhập
+        if (!userId) {
+            alert("Vui lòng đăng nhập để thêm vào giỏ hàng!");
+            return;
         }
-        else{
+
+        const idTour = formCart.querySelector('input[name="tour_id"]').value;
+        const quantity = parseInt(formCart.querySelector("input").value);
+
+        const cart = JSON.parse(localStorage.getItem("cart"));
+
+        const existTour = cart.findIndex(item => item.tourId == idTour);
+        if (existTour === -1) {
+            cart.push({
+                tourId: idTour,
+                quantity: quantity
+            });
+        } else {
             cart[existTour].quantity += quantity;
         }
+
         alertAddCartSusscess();
-       
+
         localStorage.setItem("cart", JSON.stringify(cart));
         showMiniCart();
-    })
+    });
 }
+
 
 // Vẽ thông tin đơn hàng
 const drawCart = () => {

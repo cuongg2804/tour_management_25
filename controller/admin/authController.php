@@ -13,6 +13,7 @@ class authControlller {
 
     public function login(){
         $pageTitle ="Đăng nhập";
+        $pageTitle = "Đăng nhập";
         include "views/admin/pages/auth/login.php";
     }
 
@@ -144,7 +145,7 @@ class authControlller {
     }
 
     public function verify($url){
-        
+        $pageTitle ="Xác minh";
         include "views/admin/pages/auth/verify.php";
     }
 
@@ -196,10 +197,10 @@ class authControlller {
 
     public function resetPost(){
         if (!isset($_SESSION['verified_email'])) {
-        $_SESSION['error'] = "Phiên đăng nhập không hợp lệ.";
-        header("Location: /tour_management/admin/auth/login");
-        exit;
-    }
+            $_SESSION['error'] = "Phiên đăng nhập không hợp lệ.";
+            header("Location: /tour_management/admin/auth/login");
+            exit;
+        }
 
     $email = $_SESSION['verified_email'];
     $newPassword = $_POST['new_password'];
@@ -233,4 +234,40 @@ class authControlller {
     }
     }
 
+    public function myaccount(){
+        $user = $_SESSION["user"];
+        $pageTitle = "Thông tin người dùng";
+        include "views/admin/pages/auth/info.php";
+    }
+
+    public function myaccountPost(){
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $fullName = $_POST['fullName'];
+    $email = $_POST['email'];
+
+    try {
+        // Cập nhật thông tin người dùng trong DB
+        $stmt = $this->conn->prepare("UPDATE account SET fullName = :fullName, email = :email WHERE id = :id");
+        $stmt->execute([
+            ':fullName' => $fullName,
+            ':email' => $email,
+            ':id' => $id
+        ]);
+
+        // Cập nhật lại session nếu là người đang đăng nhập
+        if (isset($_SESSION['user']) && $_SESSION['user']['id'] == $id) {
+            $_SESSION['user']['fullName'] = $fullName;
+            $_SESSION['user']['email'] = $email;
+        }
+
+        $_SESSION['success'] = "Cập nhật thông tin thành công!";
+    } catch (PDOException $e) {
+        $_SESSION['error'] = "Lỗi khi cập nhật: " . $e->getMessage();
+    }
+
+    header("Location: /tour_management/admin/auth/myaccount");
+    exit();
+    }
+    }
 }

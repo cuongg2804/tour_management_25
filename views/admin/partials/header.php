@@ -30,7 +30,7 @@
       </div>
       <div class="col-9">
         <div class="text-right">
-          <a href="admin/my-account" class="btn btn-primary btn-sm mr-2"><?php echo $_SESSION['user']['fullName'] ?></a>
+          <a href="admin/auth/myaccount" class="btn btn-primary btn-sm mr-2"><?php echo $_SESSION['user']['fullName'] ?></a>
           <a href="admin/auth/logout" class="btn btn-danger btn-sm">Đăng xuất</a>
         </div>
       </div>

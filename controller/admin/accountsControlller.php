@@ -85,6 +85,7 @@ class accountsController {
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $roles = $stmt->fetchAll();
+        $pageTitle = "Tạo tài khoản";
         include "views/admin/pages/accounts/create.php";
     }
     

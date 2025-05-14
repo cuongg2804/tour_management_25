@@ -11,7 +11,7 @@
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $roleList = $stmt->fetchAll();
-            $pageTitle ="Phân quyền";
+            $pageTitle ="Nhóm quyền";
             include "views/admin/pages/roles/index.php";
         }
 
@@ -45,6 +45,7 @@
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $data = $stmt->fetch();
+            $pageTitle ="Chỉnh sửa";
             include "views/admin/pages/roles/edit.php";
         }
 

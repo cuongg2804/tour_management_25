@@ -167,54 +167,62 @@
 
         
 
-        public function success ($url){
-            print_r($_GET);
-            if (!isset($url[2])) {
-                echo "Thiếu mã đơn hàng.";
-                return;
-            }
-    
-            $orderCode = $url[2];
+        public function success($url) {
+    if (!isset($url[2])) {
+        echo "Thiếu mã đơn hàng.";
+        return;
+    }
 
-            
-            // 1. Lấy thông tin đơn hàng
-            $stmt = $this->conn->prepare("SELECT * FROM orders WHERE code = :code ");
-            $stmt->execute([':code' => $orderCode]);
-            $order = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-            if (!$order) {
-                echo "Không tìm thấy đơn hàng.";
-                return;
+    $orderCode = $url[2];
+
+    // 1. Lấy thông tin đơn hàng
+    $stmt = $this->conn->prepare("SELECT * FROM orders WHERE code = :code ");
+    $stmt->execute([':code' => $orderCode]);
+    $order = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$order) {
+        echo "Không tìm thấy đơn hàng.";
+        return;
+    }
+
+    // 2. Kiểm tra user_id từ session và cập nhật vào đơn hàng
+    if (isset($_SESSION['user_id'])) {
+        $userId = $_SESSION['user_id'];
+        // Cập nhật user_id vào đơn hàng
+        $stmt = $this->conn->prepare("UPDATE orders SET user_id = :user_id WHERE id = :orderId");
+        $stmt->execute([':user_id' => $userId, ':orderId' => $order['id']]);
+    }
+
+    // 3. Lấy danh sách sản phẩm trong đơn hàng
+    $stmt = $this->conn->prepare("SELECT * FROM orders_item WHERE orderId = :orderId");
+    $stmt->execute([':orderId' => $order['id']]);
+    $listOrderItem = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $totalPrice = 0;
+
+    foreach ($listOrderItem as &$item) {
+        $stmt = $this->conn->prepare("SELECT * FROM tours WHERE id = :id AND deleted = 0 AND status = 'active'");
+        $stmt->execute([':id' => $item['tourId']]);
+        $inforTour = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($inforTour) {
+            $item['title'] = $inforTour['title'];
+
+            if (!empty($inforTour['images'])) {
+                $images = json_decode($inforTour['images'], true);
+                $item['image'] = $images[0] ?? '';
             }
-    
-            // 2. Lấy danh sách sản phẩm trong đơn hàng
-            $stmt = $this->conn->prepare("SELECT * FROM orders_item WHERE orderId = :orderId");
-            $stmt->execute([':orderId' => $order['id']]);
-            $listOrderItem = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $totalPrice = 0;
-            foreach ($listOrderItem as &$item) {
-                $stmt = $this->conn->prepare("SELECT * FROM tours WHERE id = :id AND deleted = 0 AND status = 'active'");
-                $stmt->execute([':id' => $item['tourId']]);
-                $inforTour = $stmt->fetch(PDO::FETCH_ASSOC);
- 
-                if ($inforTour) {
-                    $item['title'] = $inforTour['title'];
-    
-                    if (!empty($inforTour['images'])) {
-                        $images = json_decode($inforTour['images'], true);
-                        $item['image'] = $images[0] ?? '';
-                    }
-    
-                    $item['price_special'] = $inforTour['price'] * (1 - $inforTour['discount'] / 100);
-                    $item['total'] = $item['price_special'] * $item['quantity'];
-                    $totalPrice += $item['total'];
-                }
-            }
-    
-            // 3. Gửi dữ liệu sang view
-            $pageTitle = "Đặt hàng thành công!";
-            include "views/client/pages/cart/success.php";
+
+            $item['price_special'] = $inforTour['price'] * (1 - $inforTour['discount'] / 100);
+            $item['total'] = $item['price_special'] * $item['quantity'];
+            $totalPrice += $item['total'];
         }
+    }
+
+    // 4. Gửi dữ liệu sang view
+    $pageTitle = "Đặt hàng thành công!";
+    include "views/client/pages/cart/success.php";
+}
+
         
     }
 ?>
