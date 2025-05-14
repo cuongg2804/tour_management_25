@@ -36,6 +36,7 @@
       <div class="select-container">
         <label for="orderStatus" class="form-label">Chọn trạng thái</label>
         <select name="orderStatus" id="orderStatus" class="form-select form-select-lg">
+          <option value="">Tất cả</option>
           <option value="initial" <?= isset($_GET['orderStatus']) && $_GET['orderStatus'] == 'initial' ? 'selected' : '' ?>>Chờ xác nhận</option>
           <option value="confirmed" <?= isset($_GET['orderStatus']) && $_GET['orderStatus'] == 'confirmed' ? 'selected' : '' ?>>Đã xác nhận</option>
           <option value="paied" <?= isset($_GET['orderStatus']) && $_GET['orderStatus'] == 'paied' ? 'selected' : '' ?>>Đã thanh toán</option>

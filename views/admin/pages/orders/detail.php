@@ -80,7 +80,7 @@
                     <option value="initial" <?= $order['status'] == 'initial' ? 'selected' : '' ?>>Chờ xác nhận</option>
                     <option value="confirmed" <?= $order['status'] == 'confirmed' ? 'selected' : '' ?>>Đã xác nhận</option>
                     <option value="paied" <?= $order['status'] == 'paied' ? 'selected' : '' ?>>Đã thanh toán</option>
-                    <option value="shipping" <?= $order['status'] == 'shipping' ? 'selected' : '' ?>>Đang giao hàng</option>
+                    <option value="shipping" <?= $order['status'] == 'shipping' ? 'selected' : '' ?>>Đang xử lý</option>
                     <option value="delivered" <?= $order['status'] == 'delivered' ? 'selected' : '' ?>>Hoàn thành</option>
                     <option value="cancelled" <?= $order['status'] == 'cancelled' ? 'selected' : '' ?>>Đã hủy</option>
                 </select>

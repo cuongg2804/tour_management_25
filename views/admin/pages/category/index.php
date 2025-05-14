@@ -17,15 +17,16 @@
         >
         <button type="submit" class="btn btn-primary">Tìm</button>
       </form>
-
-      <div class="row">
-        <div class="col-8"></div>
-        <div class="col-4 text-right">
-          <a href="admin/category/create" class="btn btn-outline-success">
-            + Thêm mới
-          </a>
+      <?php  if (isset($_SESSION['user']['permissions']) && in_array('products-category_create', $_SESSION['user']['permissions'])) : ?>
+        <div class="row">
+          <div class="col-8"></div>
+          <div class="col-4 text-right">
+            <a href="admin/category/create" class="btn btn-outline-success">
+              + Thêm mới
+            </a>
+          </div>
         </div>
-      </div>
+      <?php endif; ?>
 
       <table class="table table-hover table-sm mt-3">
         <thead>
@@ -57,18 +58,21 @@
                 <?php endif; ?>
               </td>
               <td>
+                
                 <a href="admin/category/detail/<?= $item['id'] ?>"
                    class="btn btn-secondary btn-sm">Chi tiết</a>
-
-                <a href="admin/category/edit/<?= $item['id'] ?>"
-                   class="btn btn-warning btn-sm ml-1">Sửa</a>
-
-                <button class="btn btn-danger btn-sm ml-1"
-                        title="<?= htmlspecialchars($item['title']) ?>"
-                        data-id="<?= $item['id'] ?>"
-                        button-delete-category>
-                  Xóa
-                </button>
+                <?php  if (isset($_SESSION['user']['permissions']) && in_array('products-category_edit', $_SESSION['user']['permissions'])) : ?>
+                  <a href="admin/category/edit/<?= $item['id'] ?>"
+                    class="btn btn-warning btn-sm ml-1">Sửa</a>
+                <?php  endif; ?>
+                <?php  if (isset($_SESSION['user']['permissions']) && in_array('products-category_delete', $_SESSION['user']['permissions'])) : ?>
+                  <button class="btn btn-danger btn-sm ml-1"
+                          title="<?= htmlspecialchars($item['title']) ?>"
+                          data-id="<?= $item['id'] ?>"
+                          button-delete-category>
+                    Xóa
+                  </button>
+                <?php  endif; ?>
               </td>
             </tr>
           <?php endforeach; ?>

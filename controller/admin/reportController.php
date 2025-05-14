@@ -12,57 +12,52 @@
             include "views/admin/pages/report/index.php";
         }
 
-        public function indexPost(){
+       public function indexPost() {
+    $month = $_POST['month'] ?? null;
+    $status = $_POST['status'] ?? null;
 
-                $month = $_POST['month'] ?? null;
-                $status = $_POST['status'] ?? null;
-                $tourName = $_POST['tour_name'] ?? null;
+    $conditions = [];
+    $params = [];
 
-                $sql = "SELECT t.title AS tour_name, SUM(oi.quantity) AS total_customers,
-                                SUM(oi.quantity * oi.price * (1 - oi.discount / 100)) AS total_revenue
-                            FROM orders_item oi
-                            JOIN orders o ON oi.orderId = o.id
-                            JOIN tours t ON oi.tourId = t.id
-                            WHERE o.deleted IS NULL";
+    // Điều kiện tháng
+    if (!empty($month)) {
+        $conditions[] = "DATE_FORMAT(orders.createdAt, '%Y-%m') = :month";
+        $params[':month'] = $month;
+    }
 
-                $params = [];
+    // Điều kiện trạng thái
+    if (!empty($status)) {
+        $conditions[] = "orders.status = :status";
+        $params[':status'] = $status;
+    }
 
-                if (!empty($month)) {
-                    // Thêm điều kiện lọc theo tháng
-                    $sql .= " AND DATE_FORMAT(o.createdAt, '%Y-%m') = :month";
-                    $params[':month'] = $month; // Tháng cần được truyền vào
-                }
+    // Tạo chuỗi điều kiện WHERE nếu có
+    $whereClause = "";
+    if (!empty($conditions)) {
+        $whereClause = "WHERE " . implode(" AND ", $conditions);
+    }
 
-                if (!empty($status)) {
-                    // Thêm điều kiện lọc theo trạng thái
-                    $sql .= " AND o.status = :status";
-                    $params[':status'] = $status;
-                }
+    // Câu SQL chính
+    $sql = "
+        SELECT 
+            tours.title AS tour_name,
+            SUM(orders_item.quantity) AS total_customers,
+            SUM(orders_item.quantity * orders_item.price) AS total_revenue
+        FROM orders
+        INNER JOIN orders_item ON orders.id = orders_item.orderId
+        INNER JOIN tours ON orders_item.tourId = tours.id
+        $whereClause
+        GROUP BY orders_item.tourId
+    ";
 
-                if (!empty($tourName)) {
-                    // Thêm điều kiện lọc theo tên tour
-                    $sql .= " AND t.title LIKE :tour_name";
-                    $params[':tour_name'] = '%' . $tourName . '%';
-                }
+    $stmt = $this->conn->prepare($sql);
+    $stmt->execute($params);
 
-                $sql .= " GROUP BY t.id ORDER BY total_revenue DESC";
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                // Tạo câu SQL với các tham số đã thay thế
-                $finalSql = $sql;
+    include "views/admin/pages/report/index.php";
+}
 
-                foreach ($params as $key => $value) {
-                    // Thay thế tham số trong câu SQL bằng giá trị thực tế
-                    $finalSql = str_replace($key, "'$value'", $finalSql);
-                }
 
-                
-
-                // Tiếp tục thực thi truy vấn sau khi in ra SQL
-                $stmt = $this->conn->prepare($sql);
-                $stmt->execute($params);
-                $results = $stmt->fetchAll();
-
-             include "views/admin/pages/report/index.php";
-        }
     }
 ?>

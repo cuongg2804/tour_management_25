@@ -70,9 +70,6 @@
                 } catch (PDOException $e) {
                     $_SESSION['error'] = "Lỗi: " . $e->getMessage();
                 }
-
-                header("Location:/tour_management/admin/roles");
-                exit();
             }
         }
 
@@ -105,24 +102,36 @@
             include "views/admin/pages/roles/permisssions.php";
         }
 
-        public function permissionsPost(){
+        public function permissionsPost() {
+    $rolesData = json_decode($_POST['roles'], true);
 
-            $rolesData = json_decode($_POST['roles'], true);
+    if (is_array($rolesData)) {
+        foreach ($rolesData as $role) {
+            $id = $role['id'];
+            $permissions = json_encode($role['permissions']); // chuỗi JSON
 
-if (is_array($rolesData)) {
-    foreach ($rolesData as $role) {
-        $id = $role['id'];
-        $permissions = json_encode($role['permissions']); // chuỗi JSON
+            // Cập nhật vào database
+            $stmt = $this->conn->prepare("UPDATE roles SET permissions = :permissions WHERE id = :id");
+            $stmt->execute([
+                ':permissions' => $permissions,
+                ':id' => $id
+            ]);
 
-        // Chuẩn bị và thực thi câu lệnh cập nhật
-        $stmt = $this->conn->prepare("UPDATE roles SET permissions = :permissions WHERE id = :id");
-        $stmt->execute([
-            ':permissions' => $permissions,
-            ':id' => $id
-        ]);
-    }
+            // Nếu đang cập nhật đúng role của người dùng hiện tại -> cập nhật lại session
+            if (isset($_SESSION['user']['role_id']) && $_SESSION['user']['role_id'] == $id) {
+                $_SESSION['user']['permissions'] = $role['permissions'];
+            }
+        }
 
+        $_SESSION['success'] = "Cập nhật quyền thành công.";
         header("Location:/tour_management/admin/roles/permissions");
-    } 
-}}
+        exit();
+    } else {
+        $_SESSION['error'] = "Dữ liệu không hợp lệ.";
+        header("Location:/tour_management/admin/roles/permissions");
+        exit();
+    }
+}
+
+}
     ?>

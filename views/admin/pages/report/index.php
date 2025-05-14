@@ -18,21 +18,15 @@
       <label for="status" class="mr-2">Trạng thái đơn:</label>
       <select id="status" name="status" class="form-control mr-3">
         <option value="">Tất cả</option>
-        <option value="pending" <?= ($_POST['status'] ?? '') === 'pending' ? 'selected' : '' ?>>Chờ xử lý</option>
-        <option value="processing" <?= ($_POST['status'] ?? '') === 'processing' ? 'selected' : '' ?>>Đang xử lý</option>
-        <option value="completed" <?= ($_POST['status'] ?? '') === 'completed' ? 'selected' : '' ?>>Hoàn thành</option>
-        <option value="cancelled" <?= ($_POST['status'] ?? '') === 'cancelled' ? 'selected' : '' ?>>Đã hủy</option>
+        <option value="initial" <?= isset($_POST['status']) && $_POST['status'] == 'initial' ? 'selected' : '' ?>>Chờ xác nhận</option>
+          <option value="confirmed" <?= isset($_POST['status']) && $_POST['status'] == 'confirmed' ? 'selected' : '' ?>>Đã xác nhận</option>
+          <option value="paied" <?= isset($_POST['status']) && $_POST['status'] == 'paied' ? 'selected' : '' ?>>Đã thanh toán</option>
+          <option value="shipping" <?= isset($_POST['status']) && $_POST['status'] == 'shipping' ? 'selected' : '' ?>>Đang diễn ra</option>
+          <option value="delivered" <?= isset($_POST['status']) && $_POST['status'] == 'delivered' ? 'selected' : '' ?>>Hoàn thành</option>
+          <option value="cancelled" <?= isset($_POST['status']) && $_POST['status'] == 'cancelled' ? 'selected' : '' ?>>Đã hủy</option>
       </select>
 
-      <label for="tour_name" class="mr-2">Tên tour:</label>
-      <input
-        type="text"
-        id="tour_name"
-        name="tour_name"
-        class="form-control mr-3"
-        placeholder="Nhập tên tour"
-        value="<?= htmlspecialchars($_POST['tour_name'] ?? '') ?>"
-      >
+     
 
       <button type="submit" class="btn btn-primary">Lọc</button>
     </form>
