@@ -21,7 +21,8 @@
               AND categories.deleted = false
               AND categories.status = 'active'
               AND tours.deleted = false
-              AND tours.status = 'active'";
+              AND tours.status = 'active'
+              AND tours.stock > 0";
             
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['slug' => $url[2]]);  // an toàn hơn

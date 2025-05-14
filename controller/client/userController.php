@@ -84,7 +84,7 @@
     }
 
     // Đăng nhập thành công, lưu token vào session
-    $_SESSION['tokenUser'] = $user['tokenUser'];
+    $_SESSION['user_id'] = $user['id'];
 
     header("Location: /tour_management/main");
         }

@@ -8,7 +8,7 @@
             $this->conn = (new Database())->connectDB();
         }
         public function index() {
-            $sql = "SELECT * FROM tours WHERE deleted = 0";
+            $sql = "SELECT * FROM tours WHERE deleted = 0 and stock > 0";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);

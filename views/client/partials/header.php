@@ -75,7 +75,7 @@
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle"><?php echo htmlspecialchars($user['fullName']); ?></a>
                                 <div class="dropdown-content">
-                                    <li><a href="cart">Giỏ hàng (<span mini-cart>0</span>)</a></li>
+                                  <li><a href="cart">Giỏ hàng (<span mini-cart>0</span>)</a></li>
                                     <a href="user/history">Lịch sử mua hàng</a>
                                     <a href="user/logout">Đăng xuất</a>
                                 </div>
@@ -90,5 +90,3 @@
     </header>
 </body>
 </html>
-
-

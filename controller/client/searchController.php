@@ -13,7 +13,7 @@
             $title = $_GET["keyword"];
 
             // Use prepared statement with a placeholder for security
-            $sql = "SELECT * FROM tours WHERE title LIKE :title";
+            $sql = "SELECT * FROM tours WHERE title LIKE :title and stock > 0";
             $stmt = $this->conn->prepare($sql);
 
             // Bind the :title placeholder to the user input, ensuring proper escaping
